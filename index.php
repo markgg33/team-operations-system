@@ -1,3 +1,12 @@
+<?php
+
+include "login.php";
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,19 +33,19 @@
                         <strong>TEAM OPERATIONS SYSTEM</strong>
                     </div>
                     <div class="mb-3">
-                        <label for="userEmail" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="userEmail" aria-describedby="emailHelp" />
+                        <label for="userEmail" class="form-label">Username</label>
+                        <input type="text" class="form-control" name="username" placeholder="WEB-YEAR-NUMBER"/>
                         <div id="emailHelp" class="form-text">
-                            We'll never share your email with anyone else.
+                            We'll never share information with anyone else.
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="userPass" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="userPass" required />
+                        <input type="password" class="form-control" name="userPass" required />
                     </div>
                     <br>
                     <div class="btn-center">
-                        <button type="submit" class="btn-submit"><strong>Submit</strong></button>
+                        <button type="submit" name="btn-submit" class="btn-submit"><strong>Submit</strong></button>
                     </div>
                 </form>
                 <p class="credits">All rights reserved &copy 2025</p>
