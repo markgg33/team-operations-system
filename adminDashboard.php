@@ -69,10 +69,10 @@ if (isset($_SESSION["admin_team_username"])) {
                 <li class="sidebar-list-item" data-page="students" onclick="changePage('link-generator')">
                     <i class="fa-solid fa-link"></i> LINK GENERATOR
                 </li>
-                <li class="sidebar-list-item" onclick="changePage('add-users')">
+                <li class="sidebar-list-item" onclick="changePage('crud-operations')">
                     <i class="fa-regular fa-id-card"></i> CRUD OPERATIONS
                 </li>
-                <li class="sidebar-list-item" onclick="changePage('add-users')">
+                <li class="sidebar-list-item" onclick="changePage('master-tables')">
                     <i class="fa-regular fa-id-card"></i> MASTER TABLES
                 </li>
             </ul>
@@ -207,6 +207,39 @@ if (isset($_SESSION["admin_team_username"])) {
             </div>
 
             <!-- End of Link of Launchers Page -->
+
+            <!---CRUD Operations Page--->
+
+            <div id="crud-operations-page" class="page-content">
+                <div class="main-title">
+                    <h1>CRUD OPERATIONS</h1>
+                </div>
+
+                <div class="container-fluid link-container">
+                    <div class="main-buttons">
+
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#addUsersModal">
+                            ADD USERS
+                        </button>
+
+                        <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#uploadSessionModal">
+                            UPLOAD SESSION
+                        </button>
+
+                        <?php
+                        /*ADD USERS MODAL */
+                        include "modals/add_users.php";
+
+                        /*ADD ANNOUNCEMENT MODAL */
+                        include "modals/upload_session.php";
+                        ?>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- End of CRUD Operations Page -->
 
         </main>
 
