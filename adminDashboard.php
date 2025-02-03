@@ -1,12 +1,19 @@
 <?php
 
 include "config.php";
+include "registration.php";
 include "functions.php";
 
 session_start();
 
 if (isset($_SESSION["admin_team_username"])) {
     $team_username = $_SESSION['admin_team_username'];
+} else {
+    echo '<script>
+        alert("Unauthorized access of System. Redirecting to Login Page.");
+        window.location.href = "index.php"; // Redirect after showing alert
+    </script>';
+    exit(); // Stop execution
 }
 
 ?>
