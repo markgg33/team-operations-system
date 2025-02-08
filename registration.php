@@ -58,7 +58,7 @@ if (isset($_POST['btn-register'])) {
                 echo '<script>
                         setTimeout(function() {
                             window.location.href = "adminDashboard.php";
-                        }, 1000); // 1000 milliseconds (2 seconds)
+                        }, 1000); // 5000 milliseconds (5 seconds)
                       </script>';
             }
         } else {
@@ -77,3 +77,6 @@ if (isset($_POST['btn-register'])) {
         echo '<script>alert("No file uploaded.");</script>';
     }
 }
+
+
+//($row['password'] == $password) && password = '$password';

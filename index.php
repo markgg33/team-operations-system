@@ -2,10 +2,7 @@
 
 include "login.php";
 
-
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +23,7 @@ include "login.php";
     <div class="container-fluid main-container">
         <div class="row">
             <div class="col form-container">
-                <form action="#" method="POST">
+                <form action="login.php" method="POST">
                     <div class="image-box">
                         <img src="images/undraw_logo.png" alt="IT Logo" />
                         <br>

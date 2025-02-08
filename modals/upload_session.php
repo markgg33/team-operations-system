@@ -10,16 +10,16 @@
                 <div class="container-fluid upload-container">
                     <form action="upload.php" class="form-upload" method="POST" enctype="multipart/form-data">
                         <div class="col">
+                            <label>Title:</label>
                             <div class="input-group">
-                                <span class="input-group-text">Title:</span>
                                 <input type="text" class="form-control" name="session_title" placeholder="How to rename a content inside Content Hub" autofocus required>
                             </div>
                         </div>
                         <br>
-                        <div class="textarea-section" name="session_desc">
+                        <div class="textarea-section">
                             <label>Description:</label>
                             <br>
-                            <textarea class="form-control textarea-form" placeholder="Input your description here"></textarea>
+                            <textarea class="form-control textarea-form" placeholder="Input your description here" name="session_desc"></textarea>
                         </div>
                         <br>
                         <div class="col">
@@ -29,6 +29,7 @@
                                 <span class="input-group-text"><i class="fa-solid fa-camera"></i></span>
                             </div>
                         </div>
+                        <br>
                         <div class="modal-footer">
                             <button type="button" class="btn-temp-close" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn-temp" name="upload">UPLOAD SESSION</button>

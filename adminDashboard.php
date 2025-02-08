@@ -16,6 +16,10 @@ if (isset($_SESSION["admin_team_username"])) {
     exit(); // Stop execution
 }
 
+// Fetch announcements right after including functions.php
+$announcements = getAnnouncements();
+
+
 ?>
 
 
@@ -33,6 +37,36 @@ if (isset($_SESSION["admin_team_username"])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/adminDashboard.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        function updateUsersOnline() {
+            $.ajax({
+                url: "fetch_users_online.php",
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    $("#usersOnlineCount").text(data.users_online);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching online users:", error);
+                }
+            });
+        }
+
+        // Update every 5 seconds
+        setInterval(updateUsersOnline, 5000);
+
+        // Initial call
+        updateUsersOnline();
+    </script>
+
+    <script>
+        window.addEventListener("beforeunload", function() {
+            navigator.sendBeacon("logoutAjax.php");
+        });
+    </script>
+
+
 </head>
 
 <body>
@@ -51,7 +85,7 @@ if (isset($_SESSION["admin_team_username"])) {
                 </div>
                 <button type="button" class="btn-dropdown dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                    <li><a class="dropdown-item" href="adminLogout.php">Logout</a></li>
                 </ul>
             </div>
 
@@ -70,24 +104,22 @@ if (isset($_SESSION["admin_team_username"])) {
                 <li class="sidebar-list-item active" data-page="dashboard" onclick="changePage('dashboard')">
                     <i class="fa-solid fa-chart-line"></i>DASHBOARD
                 </li>
-                <li class="sidebar-list-item" data-page="students" onclick="changePage('link-launchers')">
+                <li class="sidebar-list-item" data-page="link-launchers" onclick="changePage('link-launchers')">
                     <i class="fa-solid fa-link"></i> LINK LAUNCHERS
                 </li>
-                <li class="sidebar-list-item" data-page="students" onclick="changePage('link-generator')">
+                <li class="sidebar-list-item" data-page="link-generator" onclick="changePage('link-generator')">
                     <i class="fa-solid fa-link"></i> LINK GENERATOR
                 </li>
-                <li class="sidebar-list-item" onclick="changePage('crud-operations')">
+                <li class="sidebar-list-item" data-page="crud-operations" onclick="changePage('crud-operations')">
                     <i class="fa-regular fa-id-card"></i> CRUD OPERATIONS
                 </li>
-                <li class="sidebar-list-item" onclick="changePage('master-tables')">
+                <li class="sidebar-list-item" data-page="master-tables" onclick="changePage('master-tables')">
                     <i class="fa-regular fa-id-card"></i> MASTER TABLES
                 </li>
             </ul>
         </aside>
 
         <!-----END OF SIDEBAR------>
-
-
 
         <main class="main-container">
             <!-- Dashboard Page -->
@@ -104,7 +136,8 @@ if (isset($_SESSION["admin_team_username"])) {
                             <i class="fa-solid fa-user"></i>
                             <p>USERS ONLINE</p>
                         </div>
-                        <h2>150</h2> <!--CHANGE VALUE ACCORDING TO CODE THAT IDENTIFIES USERS ONLINE-->
+                        <!--AJAX FUNCTION FOR FETCHING ONLINE USERS-->
+                        <h2 id="usersOnlineCount">Loading...</h2> <!--CHANGE VALUE ACCORDING TO CODE THAT IDENTIFIES USERS ONLINE-->
                     </div>
 
                     <div class="card">
@@ -112,7 +145,7 @@ if (isset($_SESSION["admin_team_username"])) {
                             <i class="fa-solid fa-folder"></i>
                             <p>GSDs ACTIVE</p>
                         </div>
-                        <h2>10</h2> <!--CHANGE VALUE ACCORDING TO CODE THAT IDENTIFIES USERS ONLINE-->
+                        <h2><?php echo getActiveGSDs(); ?></h2> <!--CHANGE VALUE ACCORDING TO CODE THAT IDENTIFIES USERS ONLINE-->
                     </div>
 
                     <div class="card">
@@ -151,8 +184,54 @@ if (isset($_SESSION["admin_team_username"])) {
 
                     <div class="charts-card">
                         <p class="chart-title">GSDs STATUS</p>
-                        <div id="area-chart"></div>
+
+                        <?php
+
+                        include "ticket_list_status.php";
+
+                        ?>
+
+                        <ul class="list-group">
+                            <?php if (!empty($tickets)): ?>
+                                <?php foreach ($tickets as $ticket): ?>
+                                    <li class="list-group-item d-flex justify-content-center gsd-box">
+                                        <span> <strong><?php echo htmlspecialchars($ticket['ticket_title']); ?></strong></span>
+                                        <span class="badge bg-primary"><?php echo htmlspecialchars($ticket['assigned_to']); ?></span>
+                                        <span class="badge bg-<?php echo getStatusColor($ticket['ticket_status']); ?>">
+                                            <?php echo htmlspecialchars($ticket['ticket_status']); ?>
+                                        </span>
+                                    </li>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <li class="list-group-item text-center">No tickets found.</li>
+                            <?php endif; ?>
+                        </ul>
+
+                        <!-- Pagination Controls -->
+                        <nav>
+                            <ul class="pagination justify-content-center mt-3">
+                                <?php if ($page > 1): ?>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=<?php echo ($page - 1); ?>">Previous</a>
+                                    </li>
+                                <?php endif; ?>
+
+                                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                    <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                                        <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                    </li>
+                                <?php endfor; ?>
+
+                                <?php if ($page < $totalPages): ?>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=<?php echo ($page + 1); ?>">Next</a>
+                                    </li>
+                                <?php endif; ?>
+                            </ul>
+                        </nav>
                     </div>
+
+
                 </div>
 
             </div>
@@ -223,23 +302,42 @@ if (isset($_SESSION["admin_team_username"])) {
                 </div>
 
                 <div class="container-fluid link-container">
-                    <div class="main-buttons">
+                    <div class="main-modal-buttons">
 
                         <!-- Button trigger modal -->
                         <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#addUsersModal">
+                            <img src="svg/add_user.svg" alt="">
                             ADD USERS
                         </button>
 
                         <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#uploadSessionModal">
+                            <img src="svg/video_upload.svg" alt="">
                             UPLOAD SESSION
                         </button>
+
+                        <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#announcementModal">
+                            <img src="svg/add_post.svg" alt="">
+                            ADD ANNOUNCEMENTS
+                        </button>
+
+                        <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#assignTicketModal">
+                            <img src="svg/assign_tickets.svg" alt="">
+                            ASSIGN TICKETS
+                        </button>
+
 
                         <?php
                         /*ADD USERS MODAL */
                         include "modals/add_users.php";
 
-                        /*ADD ANNOUNCEMENT MODAL */
+                        /*UPLOAD SESSION MODAL */
                         include "modals/upload_session.php";
+
+                        /*ADD ANNOUNCEMENT MODAL */
+                        include "modals/announcements_modal.php";
+
+                        /*ASSIGN TICKET MODAL */
+                        include "modals/assign_ticket.php";
                         ?>
 
                     </div>
@@ -248,9 +346,37 @@ if (isset($_SESSION["admin_team_username"])) {
 
             <!-- End of CRUD Operations Page -->
 
-        </main>
+            <!---Master Tables Page--->
 
+            <div id="master-tables-page" class="page-content">
+                <div class="main-title">
+                    <h1>MASTER TABLES</h1>
+                </div>
+
+                <div class="container-fluid link-container">
+                    <hr>
+
+                    <?php if (!empty($announcements)): ?>
+                        <?php foreach ($announcements as $announcement): ?>
+                            <div class="announcement">
+                                <h3><?php echo htmlspecialchars($announcement['announce_title']); ?></h3>
+                                <p><?php echo nl2br(htmlspecialchars($announcement['announce_desc'])); ?></p>
+                                <small class="text-muted">
+                                    Posted on: <?php echo date("F j, Y, g:i A", strtotime($announcement['date_posted'])); ?>
+                                </small>
+                                <hr>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p>No announcements available.</p>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+        </main>
     </div>
+
+    <!-- End of Master Tables Page -->
 
     <script src="sidebar.js"></script>
 
