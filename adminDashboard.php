@@ -294,6 +294,53 @@ $announcements = getAnnouncements();
 
             <!-- End of Link of Launchers Page -->
 
+
+            <!---Link Generator Page--->
+
+            <div id="link-generator-page" class="page-content">
+                <div class="main-title">
+                    <h1>LINK GENERATOR</h1>
+                </div>
+
+                <div class="container-fluid link-gen-container">
+
+                    <div class="input-group input-group-sm link-input">
+                        <input type="text" class="form-control" id="urlPath" placeholder="Enter URL path (e.g., help/articles/privacy-policy)" oninput="generateLinks()">
+                    </div>
+
+                    <div class="container-fluid link-gen-table">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>NEW PREVIEW</th>
+                                </tr>
+                            </thead>
+                            <tbody id="newPreviewTable"></tbody>
+                        </table>
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>CD</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cdTable"></tbody>
+                        </table>
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>LIVE</th>
+                                </tr>
+                            </thead>
+                            <tbody id="liveTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- End of Link Generator Page -->
+
             <!---CRUD Operations Page--->
 
             <div id="crud-operations-page" class="page-content">
@@ -379,6 +426,8 @@ $announcements = getAnnouncements();
     <!-- End of Master Tables Page -->
 
     <script src="sidebar.js"></script>
+
+    <script src="generateLinks.js"> </script>
 
 </body>
 

@@ -17,7 +17,7 @@ if (isset($_POST['btn-submit'])) {
         // Verify password (Use password_verify if passwords are hashed)
         if ($row['password'] == $password) {
             if ($row['usertype'] == 'admin') {
-                
+
                 // Check if an admin is already logged in
                 $check_admin = "SELECT * FROM team_users WHERE usertype = 'admin' AND is_logged_in = 1";
                 $admin_result = mysqli_query($conn, $check_admin);
@@ -42,6 +42,23 @@ if (isset($_POST['btn-submit'])) {
                 header('location: adminDashboard.php');
                 exit();
             } else if ($row['usertype'] == 'user') {
+                $username = $row['username'];
+
+                // Check if this specific user is already logged in
+                $check_user = "SELECT * FROM team_users WHERE username = '$username' AND is_logged_in = 1";
+                $user_result = mysqli_query($conn, $check_user);
+
+                if (mysqli_num_rows($user_result) > 0) {
+                    echo '<script>alert("This account is already logged in on another device. Please log out first."); window.location.href="index.php";</script>';
+                    exit();
+                }
+
+                // Mark the current user as logged in
+                $update_status = "UPDATE team_users SET is_logged_in = 1 WHERE username = '$username'";
+                mysqli_query($conn, $update_status);
+
+                // Store user session data
+                $_SESSION['user_id'] = $row['id']; // Store user ID for reference
                 $_SESSION['user_team_username'] = $row['username'];
                 $_SESSION['user_first_name'] = $row['first_name'];
                 $_SESSION['user_middle_name'] = $row['middle_name'];
@@ -51,6 +68,7 @@ if (isset($_POST['btn-submit'])) {
                 $_SESSION['user_photo'] = $row['photo'];
                 $_SESSION['user_created'] = $row['email'];
                 $_SESSION['user_usertype'] = $row['usertype'];
+
                 header('location: userDashboard.php');
                 exit();
             }

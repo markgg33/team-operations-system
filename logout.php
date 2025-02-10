@@ -4,7 +4,9 @@ include "config.php";
 
 if (isset($_SESSION["user_team_username"])) {
     $team_username = $_SESSION["user_team_username"];
-    $query = "UPDATE team_users SET is_online = 0 WHERE username = '$team_username'";
+
+    // Update both is_online and is_logged_in to 0
+    $query = "UPDATE team_users SET is_online = 0, is_logged_in = 0 WHERE username = '$team_username'";
     mysqli_query($conn, $query);
 
     // Remove only user-related session variables
@@ -19,6 +21,6 @@ if (isset($_SESSION["user_team_username"])) {
     unset($_SESSION["user_usertype"]);
 }
 
-// Redirect without destroying the whole session
+// Redirect to login page
 header("Location: index.php");
 exit();

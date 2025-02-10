@@ -18,7 +18,12 @@ if (isset($_SESSION["user_team_username"])) {
     exit();
 }
 
+//FETCH TICKETS ASSIGNED
 $tickets = getUserTickets($team_username);
+
+// Fetch videos from the database
+$query = "SELECT * FROM upload_session ORDER BY session_id DESC";
+$result = mysqli_query($conn, $query);
 
 ?>
 
@@ -182,13 +187,84 @@ $tickets = getUserTickets($team_username);
                     <?php endif; ?>
                 </div>
             </div>
-
-
             <!-- End of Tickets Page -->
+
+            <!---START OF SESSION PAGE--->
+
+            <div id="session-page" class="page-content">
+                <div class="main-title">
+                    <h1>SESSIONS</h1>
+                </div>
+                <div class="video-container">
+
+                    <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                        <div class="video-card">
+                            <h3><?php echo htmlspecialchars($row['session_title']); ?></h3>
+                            <p><?php echo htmlspecialchars($row['session_desc']); ?></p>
+                            <video width="100%" controls>
+                                <source src="uploads/videos/<?php echo htmlspecialchars($row['session_vid']); ?>" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    <?php } ?>
+                </div>
+            </div>
+
+            <!---END OF SESSION PAGE--->
+
+            <!---Link Generator Page--->
+
+            <div id="link-generator-page" class="page-content">
+                <div class="main-title">
+                    <h1>LINK GENERATOR</h1>
+                </div>
+
+                <div class="container-fluid link-gen-container">
+
+                    <div class="input-group input-group-sm link-input">
+                        <input type="text" class="form-control" id="urlPath" placeholder="Enter URL path (e.g., help/articles/privacy-policy)" oninput="generateLinks()">
+                    </div>
+
+                    <div class="container-fluid link-gen-table">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>NEW PREVIEW</th>
+                                </tr>
+                            </thead>
+                            <tbody id="newPreviewTable"></tbody>
+                        </table>
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>CD</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cdTable"></tbody>
+                        </table>
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>LIVE</th>
+                                </tr>
+                            </thead>
+                            <tbody id="liveTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- End of Link Generator Page -->
+
+
         </main>
     </div>
 
     <script src="sidebar.js"></script>
+    <script src="generateLinks.js"> </script>
+
 </body>
 
 </html>
