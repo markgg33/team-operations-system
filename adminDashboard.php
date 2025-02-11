@@ -38,6 +38,7 @@ $announcements = getAnnouncements();
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/adminDashboard.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="fetchTables.js"></script>
     <script>
         function updateUsersOnline() {
             $.ajax({
@@ -65,7 +66,6 @@ $announcements = getAnnouncements();
             navigator.sendBeacon("logoutAjax.php");
         });
     </script>
-
 
 </head>
 
@@ -401,24 +401,52 @@ $announcements = getAnnouncements();
                 </div>
 
                 <div class="container-fluid link-container">
-                    <hr>
+                    <div class="container mt-4">
+                        <h2 class="mb-3">📌 TICKETS MANAGEMENT</h2>
+                        <table class="table table-bordered">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Assigned To</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ticketsTable"></tbody>
+                        </table>
 
-                    <?php if (!empty($announcements)): ?>
-                        <?php foreach ($announcements as $announcement): ?>
-                            <div class="announcement">
-                                <h3><?php echo htmlspecialchars($announcement['announce_title']); ?></h3>
-                                <p><?php echo nl2br(htmlspecialchars($announcement['announce_desc'])); ?></p>
-                                <small class="text-muted">
-                                    Posted on: <?php echo date("F j, Y, g:i A", strtotime($announcement['date_posted'])); ?>
-                                </small>
-                                <hr>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p>No announcements available.</p>
-                    <?php endif; ?>
+                        <h2 class="mt-5">👤 USER LIST</h2>
+                        <table class="table table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Full Name</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Gender</th>
+                                    <th>Date of Birth</th>
+                                    <th>User Type</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTable"></tbody>
+                        </table>
+
+                        <h2 class="mt-5">🎥 UPLOADED VIDEO SESSIONS</h2>
+                        <table class="table table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Session ID</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sessionsTable"></tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+
+                <script src="fetchTables.js"></script>
+
 
         </main>
     </div>
@@ -426,8 +454,8 @@ $announcements = getAnnouncements();
     <!-- End of Master Tables Page -->
 
     <script src="sidebar.js"></script>
-
     <script src="generateLinks.js"> </script>
+
 
 </body>
 
