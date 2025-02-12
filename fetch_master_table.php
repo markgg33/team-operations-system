@@ -4,7 +4,7 @@ include 'config.php'; // Your database connection
 header('Content-Type: application/json');
 
 // Fetch Tickets
-$ticketsQuery = "SELECT t.ticket_id, t.ticket_title, t.ticket_desc, t.ticket_status, u.first_name, u.surname 
+$ticketsQuery = "SELECT t.ticket_id, t.ticket_title,t.ticket_desc, t.ticket_status, u.first_name, u.surname 
                  FROM tickets t 
                  JOIN team_users u ON t.assigned_to = u.team_id";
 $ticketsResult = mysqli_query($conn, $ticketsQuery);
