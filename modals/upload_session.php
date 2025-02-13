@@ -12,7 +12,7 @@
                         <div class="col">
                             <label>Title:</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" name="session_title" placeholder="Enter Session Title" required>
+                                <input type="text" class="form-control" name="session_title" placeholder="Enter Session Title" required oninput="this.value = this.value.toUpperCase();">
                             </div>
                         </div>
                         <br>

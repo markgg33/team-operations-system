@@ -406,8 +406,9 @@ $announcements = getAnnouncements();
                         <table class="table table-bordered">
                             <thead class="table-dark">
                                 <tr>
+                                    <th>Ticket #</th>
                                     <th>ID</th>
-                                    <th>Title</th>
+                                    <th>Title</th> 
                                     <th>Assigned To</th>
                                     <th>Status</th>
                                 </tr>

@@ -12,7 +12,7 @@
                         <div class="col">
                             <div class="input-group">
                                 <span class="input-group-text">Title:</span>
-                                <input type="text" class="form-control" name="announce_title" placeholder="Sample Announcement Title" autofocus required>
+                                <input type="text" class="form-control" name="announce_title" placeholder="Sample Announcement Title" autofocus required oninput="this.value = this.value.toUpperCase();">
                             </div>
                         </div>
                         <br>
@@ -24,7 +24,7 @@
                         <br>
                         <div class="modal-footer">
                             <button type="button" class="btn-temp-close" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn-temp" name="announce">UPLOAD SESSION</button>
+                            <button type="submit" class="btn-temp" name="announce">POST ANNOUNCEMENT</button>
                         </div>
                     </form>
                 </div>

@@ -21,13 +21,14 @@ $(document).ready(function () {
     table.empty();
     tickets.forEach((ticket) => {
       let row = `<tr>
-                <td>${ticket.ticket_id}</td>
-                <td><strong>${ticket.ticket_title}</strong></td>
-                <td>${ticket.first_name} ${ticket.surname}</td>
-                <td><span class="badge bg-${getStatusColor(
-                  ticket.ticket_status
-                )}">${ticket.ticket_status}</span></td>
-            </tr>`;
+            <td><strong>${ticket.ticket_number}</strong></td>
+            <td>${ticket.ticket_id}</td>
+            <td>${ticket.ticket_title}</td>
+            <td>${ticket.first_name} ${ticket.surname}</td>
+            <td><span class="badge bg-${getStatusColor(
+              ticket.ticket_status
+            )}">${ticket.ticket_status}</span></td>
+        </tr>`;
       table.append(row);
     });
   }

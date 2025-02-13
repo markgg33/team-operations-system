@@ -159,6 +159,10 @@ $result = mysqli_query($conn, $query);
                         <?php foreach ($tickets as $ticket): ?>
                             <div class="card p-4 shadow">
                                 <div class="card-body">
+                                    
+                                    <!-- Ticket Number Display -->
+                                    <h6 class="text-muted">Ticket Number: <strong><?php echo htmlspecialchars($ticket['ticket_number']); ?></strong></h6>
+
                                     <h5 class="card-title text-uppercase fw-bold"><?php echo htmlspecialchars($ticket['ticket_title']); ?></h5>
                                     <hr>
 
