@@ -108,13 +108,13 @@ $announcements = getAnnouncements();
                     <i class="fa-solid fa-link"></i> LINK LAUNCHERS
                 </li>
                 <li class="sidebar-list-item" data-page="link-generator" onclick="changePage('link-generator')">
-                    <i class="fa-solid fa-link"></i> LINK GENERATOR
+                    <i class="fa-solid fa-list"></i> LINK GENERATOR
                 </li>
                 <li class="sidebar-list-item" data-page="crud-operations" onclick="changePage('crud-operations')">
                     <i class="fa-regular fa-id-card"></i> CRUD OPERATIONS
                 </li>
                 <li class="sidebar-list-item" data-page="master-tables" onclick="changePage('master-tables')">
-                    <i class="fa-regular fa-id-card"></i> MASTER TABLES
+                    <i class="fa-solid fa-table"></i> MASTER TABLES
                 </li>
             </ul>
         </aside>
@@ -195,6 +195,7 @@ $announcements = getAnnouncements();
                             <?php if (!empty($tickets)): ?>
                                 <?php foreach ($tickets as $ticket): ?>
                                     <li class="list-group-item d-flex justify-content-center gsd-box">
+                                        <span> <strong><?php echo htmlspecialchars($ticket['ticket_number']); ?></strong></span>
                                         <span> <strong><?php echo htmlspecialchars($ticket['ticket_title']); ?></strong></span>
                                         <span class="badge bg-primary"><?php echo htmlspecialchars($ticket['assigned_to']); ?></span>
                                         <span class="badge bg-<?php echo getStatusColor($ticket['ticket_status']); ?>">
@@ -385,7 +386,9 @@ $announcements = getAnnouncements();
 
                         /*ASSIGN TICKET MODAL */
                         include "modals/assign_ticket.php";
+
                         ?>
+
 
                     </div>
                 </div>
@@ -400,6 +403,18 @@ $announcements = getAnnouncements();
                     <h1>MASTER TABLES</h1>
                 </div>
 
+                <script src="delete_and_update.js"></script>
+
+                <?php
+
+                /*UPDATE TICKET MODAL */
+                include "modals/update_ticket_modal.php";
+
+                /*DELETE TICKET MODAL */
+                include "modals/delete_ticket_modal.php";
+
+                ?>
+
                 <div class="container-fluid link-container">
                     <div class="container mt-4">
                         <h2 class="mb-3">📌 TICKETS MANAGEMENT</h2>
@@ -408,9 +423,10 @@ $announcements = getAnnouncements();
                                 <tr>
                                     <th>Ticket #</th>
                                     <th>ID</th>
-                                    <th>Title</th> 
+                                    <th>Title</th>
                                     <th>Assigned To</th>
                                     <th>Status</th>
+                                    <th>Update/Delete</th>
                                 </tr>
                             </thead>
                             <tbody id="ticketsTable"></tbody>

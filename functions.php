@@ -126,7 +126,7 @@ function getAllTickets($page, $limit)
     global $conn;
     $offset = ($page - 1) * $limit;
 
-    $query = "SELECT t.ticket_title, 
+    $query = "SELECT t.ticket_number, t.ticket_title,
                      CONCAT(u.first_name, ' ', u.surname, ' (' , u.username , ')') AS assigned_to,
                      t.ticket_status
               FROM tickets t

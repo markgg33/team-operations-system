@@ -80,6 +80,12 @@ $result = mysqli_query($conn, $query);
         });
     </script>
 
+    <script>
+        window.addEventListener("beforeunload", function() {
+            navigator.sendBeacon("userlogoutAjax.php");
+        });
+    </script>
+
 </head>
 
 <body>
@@ -159,7 +165,7 @@ $result = mysqli_query($conn, $query);
                         <?php foreach ($tickets as $ticket): ?>
                             <div class="card p-4 shadow">
                                 <div class="card-body">
-                                    
+
                                     <!-- Ticket Number Display -->
                                     <h6 class="text-muted">Ticket Number: <strong><?php echo htmlspecialchars($ticket['ticket_number']); ?></strong></h6>
 

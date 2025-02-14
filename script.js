@@ -7,3 +7,6 @@ function redirectToLogin() {
 
 // Call the redirectToLogin function when the page loads
 window.onload = redirectToLogin;
+
+
+
