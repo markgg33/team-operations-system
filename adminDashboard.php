@@ -403,6 +403,16 @@ $announcements = getAnnouncements();
                     <h1>MASTER TABLES</h1>
                 </div>
 
+                <?php
+                /*UPDATE MODAL */
+                include "modals/update_ticket_modal.php";
+
+                /*DELETE MODAL */
+                include "modals/delete_ticket_modal.php";
+
+
+                ?>
+
                 <div class="container-fluid link-container">
                     <div class="container mt-4">
                         <h2 class="mb-3">📌 TICKETS MANAGEMENT</h2>
