@@ -47,7 +47,6 @@
                             <label for="Email">Email:</label>
                             <div class="input-group">
                                 <input type="email" class="form-control" name="email" placeholder="Enter Email" required>
-                                <span class="input-group-text">@gmail.com</i></span>
                             </div>
                         </div>
                         <div class="mb-3"></div>

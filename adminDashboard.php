@@ -142,8 +142,8 @@ $announcements = getAnnouncements();
 
                     <div class="card">
                         <div class="card-inner">
-                            <i class="fa-solid fa-folder"></i>
-                            <p>GSDs ACTIVE</p>
+                            <i class="fa-solid fa-ticket"></i>
+                            <p>TICKET ACTIVE</p>
                         </div>
                         <h2><?php echo getActiveGSDs(); ?></h2> <!--CHANGE VALUE ACCORDING TO CODE THAT IDENTIFIES USERS ONLINE-->
                     </div>
@@ -183,7 +183,7 @@ $announcements = getAnnouncements();
                     </div>
 
                     <div class="charts-card">
-                        <p class="chart-title">GSDs STATUS</p>
+                        <p class="chart-title">TICKET OVERVIEW</p>
 
                         <?php
 
@@ -410,17 +410,19 @@ $announcements = getAnnouncements();
                 /*DELETE MODAL */
                 include "modals/delete_ticket_modal.php";
 
+                /*DELETE MODAL */
+                include "modals/delete_announcement_modal.php";
 
                 ?>
 
                 <div class="container-fluid link-container">
                     <div class="container mt-4">
-                        <h2 class="mb-3">📌 TICKETS MANAGEMENT</h2>
+                        <h2 class="mb-3">TICKETS</h2>
                         <table class="table table-bordered">
                             <thead class="table-dark">
                                 <tr>
+                                    <th>Priority</th>
                                     <th>Ticket #</th>
-                                    <th>ID</th>
                                     <th>Title</th>
                                     <th>Assigned To</th>
                                     <th>Status</th>
@@ -430,7 +432,7 @@ $announcements = getAnnouncements();
                             <tbody id="ticketsTable"></tbody>
                         </table>
 
-                        <h2 class="mt-5">👤 USER LIST</h2>
+                        <h2 class="mt-5">USER LIST</h2>
                         <table class="table table-striped">
                             <thead class="table-dark">
                                 <tr>
@@ -446,7 +448,7 @@ $announcements = getAnnouncements();
                             <tbody id="usersTable"></tbody>
                         </table>
 
-                        <h2 class="mt-5">🎥 UPLOADED VIDEO SESSIONS</h2>
+                        <h2 class="mt-5">UPLOADED VIDEO SESSIONS</h2>
                         <table class="table table-hover">
                             <thead class="table-dark">
                                 <tr>
@@ -457,12 +459,46 @@ $announcements = getAnnouncements();
                             </thead>
                             <tbody id="sessionsTable"></tbody>
                         </table>
+                        <!-- 📢 ANNOUNCEMENTS MANAGEMENT -->
+                        <h2 class="mt-5">📢 ANNOUNCEMENTS</h2>
+                        <table class="table table-bordered">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Date Posted</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="announcementsTable">
+                                <?php
+                                $query = "SELECT * FROM announcements ORDER BY date_posted DESC";
+                                $result = mysqli_query($conn, $query);
+                                while ($row = mysqli_fetch_assoc($result)) { ?>
+                                    <tr>
+                                        <td><?php echo $row['announce_id']; ?></td>
+                                        <td><?php echo htmlspecialchars($row['announce_title']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['announce_desc']); ?></td>
+                                        <td><?php echo $row['date_posted']; ?></td>
+                                        <td>
+                                            <!-- Delete Button -->
+                                            <button class="btn btn-danger btn-sm deleteAnnouncementBtn"
+                                                data-id="<?php echo $row['announce_id']; ?>"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#deleteAnnouncementModal">
+                                                <i class="fa-solid fa-trash"></i> Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
+
                 <script src="fetchTables.js"></script>
-
-
         </main>
     </div>
 

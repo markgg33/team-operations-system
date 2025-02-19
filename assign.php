@@ -8,6 +8,7 @@ if (isset($_POST['assign'])) {
     $description = mysqli_real_escape_string($conn, $_POST['ticket_desc']);
     $status = mysqli_real_escape_string($conn, $_POST['ticket_status']);
     $assigned_to = mysqli_real_escape_string($conn, $_POST['assigned_user']);
+    $priority = isset($_POST['priority']) ? (int) $_POST['priority'] : 3; // Default priority 3 (Low)
     $date_created = date("Y-m-d H:i:s"); // Current timestamp
 
     // Ensure required fields are not empty
@@ -32,9 +33,9 @@ if (isset($_POST['assign'])) {
     // Format ticket number as CDP-XXXXXX
     $ticketNumber = "CDP-" . str_pad($newNumber, 6, "0", STR_PAD_LEFT);
 
-    // Insert into the database
-    $sql = "INSERT INTO tickets (ticket_number, ticket_title, ticket_desc, ticket_status, assigned_to, created_at) 
-            VALUES ('$ticketNumber', '$title', '$description', '$status', '$assigned_to', '$date_created')";
+    // Insert into the database (Including Priority)
+    $sql = "INSERT INTO tickets (ticket_number, ticket_title, ticket_desc, ticket_status, assigned_to, priority, created_at) 
+            VALUES ('$ticketNumber', '$title', '$description', '$status', '$assigned_to', '$priority', '$date_created')";
 
     if (mysqli_query($conn, $sql)) {
         echo "<script>alert('Ticket $ticketNumber created successfully!'); window.location.href='adminDashboard.php';</script>";
@@ -46,6 +47,7 @@ if (isset($_POST['assign'])) {
     mysqli_close($conn);
 }
 ?>
+
 
 <!---?php
 include "config.php";

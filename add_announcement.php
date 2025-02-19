@@ -1,8 +1,9 @@
 <?php
+
 include "config.php";
 session_start();
 
-if (isset($_POST['announce'])) {
+if (isset($_POST['submit_announce'])) {
     $title = mysqli_real_escape_string($conn, $_POST['announce_title']);
     $description = mysqli_real_escape_string($conn, $_POST['announce_desc']);
     $date_posted = date("Y-m-d H:i:s"); // Current timestamp

@@ -6,15 +6,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $title = $_POST["ticket_title"];
     $assigned_to = $_POST["assigned_to"];
     $status = $_POST["ticket_status"];
+    $priority = $_POST["priority"]; // New priority field
 
-    // Prepare and execute the update query
-    $stmt = $conn->prepare("UPDATE tickets SET ticket_title=?, assigned_to=?, ticket_status=? WHERE ticket_id=?");
-    $stmt->bind_param("sisi", $title, $assigned_to, $status, $id);
+    $stmt = $conn->prepare("UPDATE tickets SET ticket_title=?, assigned_to=?, ticket_status=?, priority=? WHERE ticket_id=?");
+    $stmt->bind_param("ssssi", $title, $assigned_to, $status, $priority, $id);
 
     if ($stmt->execute()) {
-        echo json_encode(["message" => "✅ Ticket updated successfully."]);
+        echo json_encode(["message" => "Ticket updated successfully."]);
     } else {
-        echo json_encode(["message" => "❌ Failed to update ticket."]);
+        echo json_encode(["message" => "Failed to update ticket."]);
     }
 
     $stmt->close();

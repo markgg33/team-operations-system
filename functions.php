@@ -115,7 +115,7 @@ function timeAgo($datetime)
 function getActiveGSDs()
 {
     global $conn;
-    $query = "SELECT COUNT(*) AS active_gsds FROM tickets WHERE ticket_status IN ('In Progress', 'On Hold')";
+    $query = "SELECT COUNT(*) AS active_gsds FROM tickets WHERE ticket_status IN ('In Progress', 'On Hold', 'Open')";
     $result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($result);
     return $row['active_gsds'] ?? 0;

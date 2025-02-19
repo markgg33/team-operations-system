@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <div class="container-fluid upload-container">
-                    <form action="announce.php" class="form-upload" method="POST" enctype="multipart/form-data">
+                    <form action="add_announcement.php" class="form-upload" method="POST" enctype="multipart/form-data">
                         <div class="col">
                             <div class="input-group">
                                 <span class="input-group-text">Title:</span>
@@ -24,7 +24,7 @@
                         <br>
                         <div class="modal-footer">
                             <button type="button" class="btn-temp-close" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn-temp" name="announce">POST ANNOUNCEMENT</button>
+                            <button type="submit" class="btn-temp" name="submit_announce">POST ANNOUNCEMENT</button>
                         </div>
                     </form>
                 </div>

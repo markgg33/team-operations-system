@@ -1,6 +1,6 @@
 <!-- Update Ticket Modal -->
 <div class="modal fade" id="updateTicketModal" tabindex="-1" aria-labelledby="updateTicketLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Update Ticket</h5>
@@ -34,11 +34,24 @@
                     <div class="mb-3">
                         <label for="updateStatus" class="form-label">Status</label>
                         <select class="form-select" id="updateStatus" name="ticket_status" required>
-                            <option value="ON HOLD">ON HOLD</option>
-                            <option value="IN PROGRESS">IN PROGRESS</option>
-                            <option value="DONE">DONE</option>
+                            <option value="OPEN">Open</option>
+                            <option value="IN PROGRESS">In progress</option>
+                            <option value="ON HOLD">On hold</option>
+                            <option value="FOR REVIEW">For review</option>
+                            <option value="DONE">Done</option>
                         </select>
                     </div>
+
+                    <!-- ✅ New Priority Level Section -->
+                    <div class="mb-3">
+                        <label for="updatePriority" class="form-label">Priority Level</label>
+                        <select class="form-select" id="updatePriority" name="priority" required>
+                            <option value="1" class="text-danger">Critical</option>
+                            <option value="2" class="text-warning">Medium</option>
+                            <option value="3" class="text-primary">Low</option>
+                        </select>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

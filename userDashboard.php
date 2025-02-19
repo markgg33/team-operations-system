@@ -40,6 +40,7 @@ $result = mysqli_query($conn, $query);
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/userDashboard.css" />
+    <script src="fetchTables.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -55,7 +56,7 @@ $result = mysqli_query($conn, $query);
                                 announcementsHtml += `
                             <div class="announcement">
                                 <hr>
-                                <h3><strong>${announcement.announce_title}</strong></h3>
+                                <h2><strong>${announcement.announce_title}</strong></h2>
                                 <p>${announcement.announce_desc.replace(/\n/g, "<br>")}</p>
                                 <small class="text-muted">
                                     Posted on: ${new Date(announcement.date_posted).toLocaleString()}
@@ -112,6 +113,7 @@ $result = mysqli_query($conn, $query);
 
         <!-----END OF HEADER------>
 
+
         <!-----SIDEBAR------>
 
         <aside id="team-sidebar">
@@ -131,6 +133,9 @@ $result = mysqli_query($conn, $query);
                 <li class="sidebar-list-item" data-page="session" onclick="changePage('session')">
                     <i class="fa-solid fa-video"></i> SESSIONS
                 </li>
+                <li class="sidebar-list-item" data-page="session" onclick="changePage('link-launchers')">
+                    <i class="fa-solid fa-video"></i> LINK LAUNCHERS
+                </li>
             </ul>
         </aside>
 
@@ -146,46 +151,150 @@ $result = mysqli_query($conn, $query);
                 <div class="main-title">
                     <h1>DASHBOARD</h1>
                 </div>
-                <div class="container-lg my-3" id="announcements-container">
+                <div class="container-lg  announcement-container" id="announcements-container">
                     <p>Loading announcements...</p>
                 </div>
             </div>
 
             <!---END OF DASHBOARD--->
 
-            <!---Tickets Page--->
+            <!---Link Launchers Page--->
 
+            <div id="link-launchers-page" class="page-content">
+                <div class="main-title">
+                    <h1>LINK LAUNCHERS</h1>
+                </div>
+
+                <div class="container-fluid link-container">
+                    <div class="main-buttons">
+
+                        <a href="https://jet-p-001.sitecorecontenthub.cloud/en-us/Account?ReturnUrl=%2Fen-us" class="btn-cards" target="_blank">
+                            <div class="btn-cards-inner">
+                                <img src="images/jetstarLogo.png" alt="Logo">
+                                <br>
+                                <p>JETSTAR ACCOUNT SIGN-IN</p>
+                            </div>
+                        </a>
+                        <a href="https://jetstarairways-my.sharepoint.com/:x:/r/personal/justin_black_jetstar_com/_layouts/15/doc2.aspx?sourcedoc=%7BD31F2C8A-2F46-46B0-B7DF-C0A522AB3BD6%7D&file=Content%20Hub%20Help%20Migration%20CIM%20-%20Monstars.xlsx&fromShare=true&action=default&mobileredirect=true&wdOrigin=TEAMS-MAGLEV.p2p_ns.rwc&wdExp=TEAMS-TREATMENT&wdhostclicktime=1721275896240&web=1
+" class="btn-cards" target="_blank">
+                            <div class="btn-cards-inner">
+                                <img src="images/cdpLogo.png" alt="Logo">
+                                <br>
+                                <p>CH MIGRATION HELP SHARED FILE</p>
+                            </div>
+                        </a>
+
+                        <a href="https://jet-p-001.sitecorecontenthub.cloud/en-us/Account?ReturnUrl=%2Fen-us" class="btn-cards" target="_blank">
+                            <div class="btn-cards-inner">
+                                <img src="images/cdpLogo.png" alt="Logo">
+                                <br>
+                                <p>JETSTAR ACCOUNT SIGN-IN</p>
+                            </div>
+                        </a>
+
+                        <a href="https://jet-p-001.sitecorecontenthub.cloud/en-us/Account?ReturnUrl=%2Fen-us" class="btn-cards" target="_blank">
+                            <div class="btn-cards-inner">
+                                <img src="images/cdpLogo.png" alt="Logo">
+                                <br>
+                                <p>VL and SL Google Forms</p>
+                            </div>
+                        </a>
+
+                        <a href="https://jet-p-001.sitecorecontenthub.cloud/en-us/Account?ReturnUrl=%2Fen-us" class="btn-cards" target="_blank">
+                            <div class="btn-cards-inner">
+                                <img src="images/cdpLogo.png" alt="Logo">
+                                <br>
+                                <p>JETSTAR ACCOUNT SIGN-IN</p>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- End of Link of Launchers Page -->
+
+            <!---Tickets Page--->
             <div id="tickets-page" class="page-content">
                 <div class="main-title">
                     <h1>ASSIGNED TICKETS</h1>
                 </div>
 
-                <div class="main-cards">
+                <div class="row">
                     <?php if (!empty($tickets)): ?>
                         <?php foreach ($tickets as $ticket): ?>
-                            <div class="card p-4 shadow">
-                                <div class="card-body">
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100 shadow d-flex flex-column justify-content-between">
+                                    <div class="card-body d-flex flex-column">
+                                        <h6 class="text-muted">Ticket Number:
+                                            <strong><?php echo htmlspecialchars($ticket['ticket_number']); ?></strong>
+                                        </h6>
+                                        <h5 class="card-title text-uppercase fw-bold">
+                                            <?php echo htmlspecialchars($ticket['ticket_title']); ?>
+                                        </h5>
+                                        <hr>
 
-                                    <!-- Ticket Number Display -->
-                                    <h6 class="text-muted">Ticket Number: <strong><?php echo htmlspecialchars($ticket['ticket_number']); ?></strong></h6>
+                                        <div class="letter-format flex-grow-1">
+                                            <p><?php echo nl2br(htmlspecialchars($ticket['ticket_desc'])); ?></p>
+                                        </div>
 
-                                    <h5 class="card-title text-uppercase fw-bold"><?php echo htmlspecialchars($ticket['ticket_title']); ?></h5>
-                                    <hr>
+                                        <hr>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="badge 
+                                    <?php
+                                    $status = strtoupper($ticket['ticket_status']); // Normalize status
 
-                                    <!-- Display ticket as a formal letter -->
-                                    <div class="letter-format">
-                                        <p><?php echo nl2br(htmlspecialchars($ticket['ticket_desc'])); ?></p>
+                                    if ($status == "IN PROGRESS") {
+                                        echo "bg-primary";
+                                    } elseif ($status == "ON HOLD") {
+                                        echo "bg-warning";
+                                    } elseif ($status == "DONE") {
+                                        echo "bg-success";
+                                    } elseif ($status == "OPEN") {
+                                        echo "bg-danger";
+                                    } elseif ($status == "FOR REVIEW") {
+                                        echo "bg-info";
+                                    } else {
+                                        echo "bg-secondary";
+                                    }
+                                    ?>">
+                                                <?php echo htmlspecialchars($ticket['ticket_status']); ?>
+                                            </span>
+
+                                            <small class="text-muted">Assigned:
+                                                <?php echo timeAgo($ticket['created_at']); ?>
+                                            </small>
+                                        </div>
+
+                                        <!-- ✅ Priority Level Badge -->
+                                        <div class="mt-2">
+                                            <span class="badge 
+                                    <?php
+                                    $priority = $ticket['priority'];
+                                    if ($priority == 1) {
+                                        echo "bg-danger"; // 🔴 Critical
+                                    } elseif ($priority == 2) {
+                                        echo "bg-warning"; // 🟡 Medium
+                                    } else {
+                                        echo "bg-primary"; // 🔵 Low
+                                    }
+                                    ?>">
+                                                <?php
+                                                echo ($priority == 1) ? "Critical" : (($priority == 2) ? "Medium" : "Low");
+                                                ?>
+                                            </span>
+                                        </div>
                                     </div>
 
-                                    <hr>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="badge badge-status 
-                            <?php
-                            echo ($ticket['ticket_status'] == 'Done') ? 'bg-success' : (($ticket['ticket_status'] == 'On Hold') ? 'bg-warning' : 'bg-primary');
-                            ?>">
-                                            <?php echo htmlspecialchars($ticket['ticket_status']); ?>
-                                        </span>
-                                        <small class="text-muted">Assigned: <?php echo timeAgo($ticket['created_at']); ?></small>
+                                    <!-- ✅ Edit Button (User Can Update Status) -->
+                                    <div class="card-footer text-center">
+                                        <button class="btn-sm editUserTicketBtn w-100"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editUserTicketModal"
+                                            data-id="<?php echo $ticket['ticket_id']; ?>"
+                                            data-status="<?php echo htmlspecialchars($ticket['ticket_status']); ?>">
+                                            <i class="fa-solid fa-pen"></i> Edit Status
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -196,8 +305,13 @@ $result = mysqli_query($conn, $query);
                         </div>
                     <?php endif; ?>
                 </div>
+
+                <!-- ✅ Include the Update Ticket Status Modal -->
+                <?php include "modals/update_user_ticket_modal.php"; ?>
             </div>
-            <!-- End of Tickets Page -->
+
+
+            <!---end of ticket page--->
 
             <!---START OF SESSION PAGE--->
 
@@ -205,20 +319,25 @@ $result = mysqli_query($conn, $query);
                 <div class="main-title">
                     <h1>SESSIONS</h1>
                 </div>
-                <div class="video-container">
 
+                <div class="row">
                     <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-                        <div class="video-card">
-                            <h3><?php echo htmlspecialchars($row['session_title']); ?></h3>
-                            <p><?php echo htmlspecialchars($row['session_desc']); ?></p>
-                            <video width="100%" controls>
-                                <source src="uploads/videos/<?php echo htmlspecialchars($row['session_vid']); ?>" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
+                        <div class="col-md-4 mb-4">
+                            <div class="video-card h-100 d-flex flex-column">
+                                <video class="flex-grow-1" controls>
+                                    <source src="uploads/videos/<?php echo htmlspecialchars($row['session_vid']); ?>" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <div class="video-info p-3 text-center">
+                                    <h5><strong><?php echo htmlspecialchars($row['session_title']); ?></strong></h5>
+                                    <p><?php echo htmlspecialchars($row['session_desc']); ?></p>
+                                </div>
+                            </div>
                         </div>
                     <?php } ?>
                 </div>
             </div>
+
 
             <!---END OF SESSION PAGE--->
 
