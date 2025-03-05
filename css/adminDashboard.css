@@ -290,20 +290,26 @@
 /*----LINK LAUNCHERS----*/
 
 .btn-cards {
+  background-image: url(JS_icon.png);
+  background-size: cover; /* Adjusts size to fit */
+  background-repeat: no-repeat; /* Prevents tiling */
+  background-position: center; /* Centers the image */
   padding: 20px 0;
   text-decoration: none;
   background-color: transparent;
-  transition: background-color 300ms;
-  border: 0.5px solid black;
+  box-shadow: 1px 1px 10px black;
+  transition: background-color 300ms, box-shadow 100ms, transform 100ms;
   border-radius: 5px;
-  box-shadow: 5px 5px 1px black;
   color: black;
   font-size: 25px;
   font-weight: bold;
+  color: white;
 }
 
 .btn-cards:hover {
-  background-color: #acacac;
+  background-color: #ffffff;
+  box-shadow: 5px 5px 1px black;
+  transform: translate(-5px, -5px);
 }
 
 .btn-cards-inner {
@@ -311,7 +317,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
+  text-align: end;
   margin: 20px 20px;
 }
 
@@ -387,8 +393,6 @@
   margin-top: 30px;
   font-size: 15px;
 }
-
-
 
 /*----END OF LINK GENERATOR----*/
 

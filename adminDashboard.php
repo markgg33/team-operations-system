@@ -251,7 +251,7 @@ $announcements = getAnnouncements();
 
                         <a href="https://jet-p-001.sitecorecontenthub.cloud/en-us/Account?ReturnUrl=%2Fen-us" class="btn-cards" target="_blank">
                             <div class="btn-cards-inner">
-                                <img src="images/jetstarLogo.png" alt="Logo">
+
                                 <br>
                                 <p>JETSTAR ACCOUNT SIGN-IN</p>
                             </div>
@@ -259,33 +259,29 @@ $announcements = getAnnouncements();
                         <a href="https://jetstarairways-my.sharepoint.com/:x:/r/personal/justin_black_jetstar_com/_layouts/15/doc2.aspx?sourcedoc=%7BD31F2C8A-2F46-46B0-B7DF-C0A522AB3BD6%7D&file=Content%20Hub%20Help%20Migration%20CIM%20-%20Monstars.xlsx&fromShare=true&action=default&mobileredirect=true&wdOrigin=TEAMS-MAGLEV.p2p_ns.rwc&wdExp=TEAMS-TREATMENT&wdhostclicktime=1721275896240&web=1
 " class="btn-cards" target="_blank">
                             <div class="btn-cards-inner">
-                                <img src="images/cdpLogo.png" alt="Logo">
                                 <br>
                                 <p>CH MIGRATION HELP SHARED FILE</p>
                             </div>
                         </a>
 
-                        <a href="https://jet-p-001.sitecorecontenthub.cloud/en-us/Account?ReturnUrl=%2Fen-us" class="btn-cards" target="_blank">
+                        <a href="https://jetstarairways.sharepoint.com/:x:/r/sites/DigitalContent-allteam/_layouts/15/doc2.aspx?sourcedoc=%7BA5BBF8FF-9674-4DBA-ABE7-86FAA9281EDA%7D&file=Permanent%20page%20build%20tracker.xlsx&wdOrigin=TEAMS-MAGLEV.p2p_ns.rwc&action=default&mobileredirect=true" class="btn-cards" target="_blank">
                             <div class="btn-cards-inner">
-                                <img src="images/cdpLogo.png" alt="Logo">
                                 <br>
-                                <p>JETSTAR ACCOUNT SIGN-IN</p>
+                                <p>PERMANENT PAGE</p>
                             </div>
                         </a>
 
-                        <a href="https://jet-p-001.sitecorecontenthub.cloud/en-us/Account?ReturnUrl=%2Fen-us" class="btn-cards" target="_blank">
+                        <a href="https://docs.google.com/spreadsheets/d/13SzCoBkmCyStxu7JAoR02O1fBdG9GSUC/edit?gid=367423830#gid=367423830" class="btn-cards" target="_blank">
                             <div class="btn-cards-inner">
-                                <img src="images/cdpLogo.png" alt="Logo">
                                 <br>
-                                <p>VL and SL Google Forms</p>
+                                <p>WORK TRACKER</p>
                             </div>
                         </a>
 
-                        <a href="https://jet-p-001.sitecorecontenthub.cloud/en-us/Account?ReturnUrl=%2Fen-us" class="btn-cards" target="_blank">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLScZXCWDRhdgBiJrYmIoNUYUZY81SbVAaq0N8wfLAvvIJ6rROw/viewform?c=0&w=1" class="btn-cards" target="_blank">
                             <div class="btn-cards-inner">
-                                <img src="images/cdpLogo.png" alt="Logo">
                                 <br>
-                                <p>JETSTAR ACCOUNT SIGN-IN</p>
+                                <p>VL and SL FORMS</p>
                             </div>
                         </a>
 
