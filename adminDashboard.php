@@ -402,9 +402,11 @@ $announcements = getAnnouncements();
                 <?php
                 /*UPDATE MODAL */
                 include "modals/update_ticket_modal.php";
+                include "modals/edit_video_modal.php";
 
                 /*DELETE MODAL */
                 include "modals/delete_ticket_modal.php";
+                include "modals/delete_video_modal.php";
 
                 /*DELETE MODAL */
                 include "modals/delete_announcement_modal.php";
@@ -451,10 +453,42 @@ $announcements = getAnnouncements();
                                     <th>Session ID</th>
                                     <th>Title</th>
                                     <th>Description</th>
+                                    <th>Actions</th> <!-- New Column for Edit/Delete -->
                                 </tr>
                             </thead>
-                            <tbody id="sessionsTable"></tbody>
+                            <tbody id="sessionsTable">
+                                <?php
+                                $query = "SELECT * FROM upload_session ORDER BY session_id DESC";
+                                $result = mysqli_query($conn, $query);
+                                while ($row = mysqli_fetch_assoc($result)) { ?>
+                                    <tr>
+                                        <td><?php echo $row['session_id']; ?></td>
+                                        <td><?php echo htmlspecialchars($row['session_title']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['session_desc']); ?></td>
+                                        <td>
+                                            <!-- Edit Button -->
+                                            <button class="btn btn-sm btn-primary editVideoBtn"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#editVideoModal"
+                                                data-id="<?php echo $row['session_id']; ?>"
+                                                data-title="<?php echo htmlspecialchars($row['session_title']); ?>"
+                                                data-desc="<?php echo htmlspecialchars($row['session_desc']); ?>">
+                                                <i class="fa-solid fa-pen"></i> Edit
+                                            </button>
+
+                                            <!-- Delete Button -->
+                                            <button class="btn btn-sm btn-danger deleteVideoBtn"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#deleteVideoModal"
+                                                data-id="<?php echo $row['session_id']; ?>">
+                                                <i class="fa-solid fa-trash"></i> Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
                         </table>
+
                         <!-- 📢 ANNOUNCEMENTS MANAGEMENT -->
                         <h2 class="mt-5">📢 ANNOUNCEMENTS</h2>
                         <table class="table table-bordered">
@@ -502,6 +536,8 @@ $announcements = getAnnouncements();
 
     <script src="sidebar.js"></script>
     <script src="generateLinks.js"> </script>
+    <script src="validateUsers.js"></script>
+
 
 
 </body>

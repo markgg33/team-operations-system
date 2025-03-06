@@ -63,16 +63,21 @@
                         </div>
                         <div class="col">
                             <label for="Password">Password:</label>
-                            <div class="input-group">
-                                <input type="password" name="password" class="form-control" placeholder="Enter Password" autofocus required>
-                                <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                            <div class="input-group" style="cursor:pointer;">
+                                <input type="password" name="password" class="form-control" id="passwordField" placeholder="Enter Password" required>
+                                <span class="input-group-text toggle-password"  onclick="togglePassword('passwordField')">
+                                    <i class="fa-solid fa-eye"></i>
+                                </span>
                             </div>
                         </div>
+
                         <div class="col">
                             <label for="ConfirmPassword">Confirm Password:</label>
-                            <div class="input-group">
-                                <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" autofocus required>
-                                <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                            <div class="input-group" style="cursor:pointer;">
+                                <input type="password" name="confirm_password" class="form-control" id="confirmPasswordField" placeholder="Confirm Password" required>
+                                <span class="input-group-text toggle-password" onclick="togglePassword('confirmPasswordField')">
+                                    <i class="fa-solid fa-eye"></i>
+                                </span>
                             </div>
                         </div>
                         <div class="mb-3"></div>
@@ -103,7 +108,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn-temp-close" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn-temp" name="btn-register" >Register</button>
+                        <button type="submit" class="btn-temp" name="btn-register">Register</button>
                     </div>
                 </form>
             </div>

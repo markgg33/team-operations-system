@@ -31,15 +31,21 @@ include "login.php";
                     </div>
                     <div class="mb-3">
                         <label for="userEmail" class="form-label">Username</label>
-                        <input type="text" class="form-control" name="username" placeholder="WEB-YEAR-NUMBER"/>
+                        <input type="text" class="form-control" name="username" placeholder="WEB-YEAR-NUMBER" />
                         <div id="emailHelp" class="form-text">
                             We'll never share information with anyone else.
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="userPass" class="form-label">Password</label>
-                        <input type="password" class="form-control" name="userPass" required />
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="userPass" name="userPass" required />
+                            <span class="input-group-text toggle-password" onclick="togglePassword('userPass')">
+                                <i class="fa-solid fa-eye"></i>
+                            </span>
+                        </div>
                     </div>
+
                     <br>
                     <div class="btn-center">
                         <button type="submit" name="btn-submit" class="btn-submit"><strong>Submit</strong></button>
@@ -49,6 +55,9 @@ include "login.php";
             </div>
         </div>
     </div>
+
+    <script src="validateUsers.js"></script>
+
 </body>
 
 </html>

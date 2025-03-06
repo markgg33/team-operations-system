@@ -122,10 +122,30 @@ $(document).ready(function () {
     table.empty();
     sessions.forEach((session) => {
       let row = `<tr>
-                <td>${session.session_id}</td>
-                <td>${session.session_title}</td>
-                <td>${session.session_desc}</td>
-            </tr>`;
+                  <td>${session.session_id}</td>
+                  <td>${session.session_title}</td>
+                  <td>${session.session_desc}</td>
+                  <td style="text-align: center;">
+                      <!-- Edit Button -->
+                      <button class="btn btn-sm btn-primary editVideoBtn"
+                      style="background-color: #242424; color: white; border: none;"
+                          data-bs-toggle="modal"
+                          data-bs-target="#editVideoModal"
+                          data-id="${session.session_id}"
+                          data-title="${session.session_title}"
+                          data-desc="${session.session_desc}">
+                          <i class="fa-solid fa-pen"></i> Edit
+                      </button>
+  
+                      <!-- Delete Button -->
+                      <button class="btn btn-sm btn-danger deleteVideoBtn"
+                          data-bs-toggle="modal"
+                          data-bs-target="#deleteVideoModal"
+                          data-id="${session.session_id}">
+                          <i class="fa-solid fa-trash"></i> Delete
+                      </button>
+                  </td>
+              </tr>`;
       table.append(row);
     });
   }
@@ -274,6 +294,115 @@ $(document).ready(function () {
             .removeClass("alert-success") // Remove success styling
             .addClass("alert-danger") // Add error styling
             .fadeIn(); // Show alert
+        },
+      });
+    });
+  });
+
+  $(document).ready(function () {
+    // Open the Edit Video Modal
+    $(document).on("click", ".editVideoBtn", function () {
+      let videoId = $(this).data("id");
+      let videoTitle = $(this).data("title");
+      let videoDesc = $(this).data("desc");
+
+      $("#editVideoId").val(videoId);
+      $("#editVideoTitle").val(videoTitle);
+      $("#editVideoDesc").val(videoDesc);
+    });
+
+    // Handle Video Update
+    $("#updateVideoForm").submit(function (event) {
+      event.preventDefault();
+      let formData = new FormData(this);
+
+      $.ajax({
+        url: "update_video.php",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        success: function (response) {
+          alert(response.message);
+          $("#editVideoModal").modal("hide");
+          location.reload();
+        },
+        error: function () {
+          alert("❌ Error updating video.");
+        },
+      });
+    });
+
+    // Open Delete Video Modal
+    $(document).on("click", ".deleteVideoBtn", function () {
+      let videoId = $(this).data("id");
+      $("#deleteVideoId").val(videoId);
+    });
+
+    // Handle Video Deletion
+    $("#confirmDeleteVideo").click(function () {
+      let videoId = $("#deleteVideoId").val();
+
+      $.ajax({
+        url: "delete_video.php",
+        type: "POST",
+        data: { session_id: videoId },
+        dataType: "json",
+        success: function (response) {
+          alert(response.message);
+          $("#deleteVideoModal").modal("hide");
+          location.reload();
+        },
+        error: function () {
+          alert("❌ Error deleting video.");
+        },
+      });
+    });
+  });
+
+  $(document).ready(function () {
+    // Toggle password visibility
+    $(".toggle-password").click(function () {
+      let input = $(this).prev("input");
+      let icon = $(this).find("i");
+
+      if (input.attr("type") === "password") {
+        input.attr("type", "text");
+        icon.removeClass("fa-eye").addClass("fa-eye-slash");
+      } else {
+        input.attr("type", "password");
+        icon.removeClass("fa-eye-slash").addClass("fa-eye");
+      }
+    });
+
+    // Handle Change Password Form Submission
+    $("#changePasswordForm").submit(function (event) {
+      event.preventDefault(); // Prevent default form submission
+
+      $.ajax({
+        url: "change_password.php",
+        type: "POST",
+        data: $(this).serialize(),
+        dataType: "json",
+        success: function (response) {
+          $("#changePasswordAlert")
+            .text(response.message)
+            .removeClass("alert-danger")
+            .addClass("alert-success")
+            .fadeIn();
+
+          setTimeout(() => {
+            $("#changePasswordModal").modal("hide");
+            window.location.href = "index.php"; // Redirect after success
+          }, 2000);
+        },
+        error: function () {
+          $("#changePasswordAlert")
+            .text("❌ Error updating password.")
+            .removeClass("alert-success")
+            .addClass("alert-danger")
+            .fadeIn();
         },
       });
     });

@@ -18,6 +18,19 @@ if (isset($_POST['btn-register'])) {
     $confirm_password = mysqli_real_escape_string($conn, $_POST['confirm_password']);
     $usertype = $_POST['usertype'];
 
+    // Check password length
+    if (strlen($pass) <= 7) {
+        echo "<script>alert('⚠️ Password must be at least 7 characters long.'); window.history.back();</script>";
+        exit();
+    }
+
+    // Hash password for security
+    $hashedPassword = password_hash($pass, PASSWORD_DEFAULT);
+
+    // Flag new users to change their password on first login
+    $change_password = 1; // 1 means they must change password
+
+
     // Validate if password and confirm password match
     if ($pass !== $confirm_password) {
         echo '<script>alert("Password and confirm password do not match.");</script>';
@@ -49,7 +62,7 @@ if (isset($_POST['btn-register'])) {
         if (move_uploaded_file($_FILES["photo"]["tmp_name"], $targetFilePath)) {
             // Insert the file path into the database
             $insert = "INSERT INTO team_users(username, email, first_name, middle_name, surname, gender, dob, password, usertype, photo) 
-                VALUES ('$username', '$email', '$first_name', '$middle_name', '$surname', '$gender', '$dob', '$pass', '$usertype', '$targetFilePath')";
+                VALUES ('$username', '$email', '$first_name', '$middle_name', '$surname', '$gender', '$dob', '$hashedPassword', '$usertype', '$targetFilePath')";
 
             // Execute the query
             if (mysqli_query($conn, $insert)) {

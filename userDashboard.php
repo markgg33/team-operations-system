@@ -383,12 +383,34 @@ $result = mysqli_query($conn, $query);
 
             <!-- End of Link Generator Page -->
 
+            <?php include "modals/change_password_modal.php"; ?>
 
         </main>
     </div>
 
     <script src="sidebar.js"></script>
     <script src="generateLinks.js"> </script>
+    <script src="fetchTables.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Check if user needs to change password
+            $.ajax({
+                url: "check_password_status.php", // A new PHP script to check the password status
+                type: "GET",
+                dataType: "json",
+                success: function(response) {
+                    if (response.change_password == 1) {
+                        $("#changePasswordModal").modal("show"); // Show the modal if required
+                    }
+                },
+                error: function() {
+                    console.error("Error checking password status.");
+                }
+            });
+        });
+    </script>
+
 
 </body>
 

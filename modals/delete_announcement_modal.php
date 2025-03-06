@@ -9,7 +9,7 @@
             <div class="modal-body">
 
                 <!-- Alert message will show here -->
-                <div id="deleteAnnounceAlert" class="alert alert-danger" style="display:none;"></div>
+                <div id="deleteAnnounceAlert" class="alert alert-success" style="display:none;"></div>
 
                 Are you sure you want to delete this announcement?
                 <input type="hidden" id="deleteAnnouncementId">
