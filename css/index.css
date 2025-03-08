@@ -78,7 +78,7 @@ form {
   text-shadow: 2px 2px 2px black;
 }
 
-.form-control {
+.form-control, .toggle-password {
   box-shadow: 5px 5px 1px black;
 }
 

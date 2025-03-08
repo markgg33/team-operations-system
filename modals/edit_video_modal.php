@@ -8,6 +8,9 @@
             </div>
             <form id="updateVideoForm" enctype="multipart/form-data">
                 <div class="modal-body">
+                    <!-- ✅ Alert for Video Update -->
+                    <div class="alert text-center" id="updateVideoAlert" style="display: none;"></div>
+
                     <input type="hidden" id="editVideoId" name="session_id">
 
                     <div class="mb-3">

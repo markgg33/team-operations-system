@@ -1,14 +1,19 @@
 $(document).ready(function () {
   $("form").submit(function (event) {
-    let password = $("input[name='password']").val();
-    let confirmPassword = $("input[name='confirm_password']").val();
+    // Check if this form contains a password field
+    if ($(this).find("input[name='password']").length > 0) {
+      let password = $(this).find("input[name='password']").val();
+      let confirmPassword = $(this)
+        .find("input[name='confirm_password']")
+        .val();
 
-    if (password.length < 7) {
-      alert("⚠️ Password must be at least 7 characters long.");
-      event.preventDefault(); // Stop form submission
-    } else if (password !== confirmPassword) {
-      alert("⚠️ Password and Confirm Password do not match.");
-      event.preventDefault(); // Stop form submission
+      if (password.length < 7) {
+        alert("⚠️ Password must be at least 7 characters long.");
+        event.preventDefault(); // Stop form submission
+      } else if (password !== confirmPassword) {
+        alert("⚠️ Password and Confirm Password do not match.");
+        event.preventDefault(); // Stop form submission
+      }
     }
   });
 });

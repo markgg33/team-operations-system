@@ -415,6 +415,8 @@ $announcements = getAnnouncements();
 
                 <div class="container-fluid link-container">
                     <div class="container mt-4">
+
+                        <!--TICKET TABLE-->
                         <h2 class="mb-3">TICKETS</h2>
                         <table class="table table-bordered">
                             <thead class="table-dark">
@@ -430,11 +432,11 @@ $announcements = getAnnouncements();
                             <tbody id="ticketsTable"></tbody>
                         </table>
 
+                        <!--USERS TABLE-->
                         <h2 class="mt-5">USER LIST</h2>
                         <table class="table table-striped">
                             <thead class="table-dark">
                                 <tr>
-                                    <th>ID</th>
                                     <th>Full Name</th>
                                     <th>Username</th>
                                     <th>Email</th>
@@ -446,11 +448,11 @@ $announcements = getAnnouncements();
                             <tbody id="usersTable"></tbody>
                         </table>
 
+                        <!--UPLOADED SESSIONS TABLE-->
                         <h2 class="mt-5">UPLOADED VIDEO SESSIONS</h2>
                         <table class="table table-hover">
                             <thead class="table-dark">
                                 <tr>
-                                    <th>Session ID</th>
                                     <th>Title</th>
                                     <th>Description</th>
                                     <th>Actions</th> <!-- New Column for Edit/Delete -->
@@ -489,12 +491,11 @@ $announcements = getAnnouncements();
                             </tbody>
                         </table>
 
-                        <!-- 📢 ANNOUNCEMENTS MANAGEMENT -->
-                        <h2 class="mt-5">📢 ANNOUNCEMENTS</h2>
+                        <!--ANNOUNCEMENTS TABLE -->
+                        <h2 class="mt-5">ANNOUNCEMENTS</h2>
                         <table class="table table-bordered">
                             <thead class="table-dark">
                                 <tr>
-                                    <th>ID</th>
                                     <th>Title</th>
                                     <th>Description</th>
                                     <th>Date Posted</th>
@@ -507,7 +508,6 @@ $announcements = getAnnouncements();
                                 $result = mysqli_query($conn, $query);
                                 while ($row = mysqli_fetch_assoc($result)) { ?>
                                     <tr>
-                                        <td><?php echo $row['announce_id']; ?></td>
                                         <td><?php echo htmlspecialchars($row['announce_title']); ?></td>
                                         <td><?php echo htmlspecialchars($row['announce_desc']); ?></td>
                                         <td><?php echo $row['date_posted']; ?></td>
@@ -534,6 +534,7 @@ $announcements = getAnnouncements();
 
     <!-- End of Master Tables Page -->
 
+    <!--SCRIPTS SECTION-->
     <script src="sidebar.js"></script>
     <script src="generateLinks.js"> </script>
     <script src="validateUsers.js"></script>

@@ -102,7 +102,6 @@ $(document).ready(function () {
     table.empty();
     users.forEach((user) => {
       let row = `<tr>
-                <td>${user.team_id}</td>
                 <td>${user.first_name} ${user.middle_name} ${user.surname}</td>
                 <td>${user.username}</td>
                 <td>${user.email}</td>
@@ -122,7 +121,6 @@ $(document).ready(function () {
     table.empty();
     sessions.forEach((session) => {
       let row = `<tr>
-                  <td>${session.session_id}</td>
                   <td>${session.session_title}</td>
                   <td>${session.session_desc}</td>
                   <td style="text-align: center;">
@@ -300,20 +298,24 @@ $(document).ready(function () {
   });
 
   $(document).ready(function () {
-    // Open the Edit Video Modal
+    // ✅ Open the Edit Video Modal & Load Data
     $(document).on("click", ".editVideoBtn", function () {
       let videoId = $(this).data("id");
       let videoTitle = $(this).data("title");
       let videoDesc = $(this).data("desc");
 
+      // Populate modal inputs with data
       $("#editVideoId").val(videoId);
       $("#editVideoTitle").val(videoTitle);
       $("#editVideoDesc").val(videoDesc);
+
+      $("#updateVideoAlert").hide(); // Hide alert when opening the modal
+      $("#editVideoModal").modal("show"); // ✅ Ensure modal shows up
     });
 
-    // Handle Video Update
+    // ✅ Handle Video Update Form Submission (Alert Inside Modal)
     $("#updateVideoForm").submit(function (event) {
-      event.preventDefault();
+      event.preventDefault(); // Prevent default form submission
       let formData = new FormData(this);
 
       $.ajax({
@@ -324,56 +326,82 @@ $(document).ready(function () {
         contentType: false,
         dataType: "json",
         success: function (response) {
-          alert(response.message);
-          $("#editVideoModal").modal("hide");
-          location.reload();
+          if (response.success) {
+            $("#updateVideoAlert")
+              .text(response.message) // Set alert text
+              .removeClass("alert-danger")
+              .addClass("alert-success")
+              .fadeIn(); // Show alert smoothly
+
+            setTimeout(() => {
+              $("#editVideoModal").modal("hide"); // Close modal after 1 second
+              location.reload(); // Refresh to update UI
+            }, 1000);
+          } else {
+            $("#updateVideoAlert")
+              .text("❌ Error updating video.")
+              .removeClass("alert-success")
+              .addClass("alert-danger")
+              .fadeIn();
+          }
         },
         error: function () {
-          alert("❌ Error updating video.");
+          $("#updateVideoAlert")
+            .text("❌ Error updating video.")
+            .removeClass("alert-success")
+            .addClass("alert-danger")
+            .fadeIn();
         },
       });
     });
 
-    // Open Delete Video Modal
-    $(document).on("click", ".deleteVideoBtn", function () {
-      let videoId = $(this).data("id");
-      $("#deleteVideoId").val(videoId);
-    });
-
-    // Handle Video Deletion
-    $("#confirmDeleteVideo").click(function () {
-      let videoId = $("#deleteVideoId").val();
-
-      $.ajax({
-        url: "delete_video.php",
-        type: "POST",
-        data: { session_id: videoId },
-        dataType: "json",
-        success: function (response) {
-          alert(response.message);
-          $("#deleteVideoModal").modal("hide");
-          location.reload();
-        },
-        error: function () {
-          alert("❌ Error deleting video.");
-        },
+    $(document).ready(function () {
+      // ✅ Open Delete Video Modal & Store Video ID
+      $(document).on("click", ".deleteVideoBtn", function () {
+        let videoId = $(this).data("id");
+        $("#deleteVideoId").val(videoId);
+        $("#deleteVideoAlert").hide(); // Hide previous alerts
       });
-    });
-  });
 
-  $(document).ready(function () {
-    // Toggle password visibility
-    $(".toggle-password").click(function () {
-      let input = $(this).prev("input");
-      let icon = $(this).find("i");
+      // ✅ Handle Delete Video Form Submission (Alert inside Modal)
+      $("#confirmDeleteVideo").click(function () {
+        let videoId = $("#deleteVideoId").val();
 
-      if (input.attr("type") === "password") {
-        input.attr("type", "text");
-        icon.removeClass("fa-eye").addClass("fa-eye-slash");
-      } else {
-        input.attr("type", "password");
-        icon.removeClass("fa-eye-slash").addClass("fa-eye");
-      }
+        $.ajax({
+          url: "delete_video.php",
+          type: "POST",
+          data: { session_id: videoId },
+          dataType: "json",
+          success: function (response) {
+            if (response.success) {
+              $("#deleteVideoAlert")
+                .text(response.message)
+                .removeClass("text-danger")
+                .addClass("text-success")
+                .show();
+
+              // Delay closing the modal and refreshing the page
+              setTimeout(() => {
+                $("#deleteVideoModal").modal("hide"); // Close modal
+                location.reload(); // Refresh to update UI
+              }, 1500);
+            } else {
+              $("#deleteVideoAlert")
+                .text("❌ Error deleting video.")
+                .removeClass("text-success")
+                .addClass("text-danger")
+                .show();
+            }
+          },
+          error: function () {
+            $("#deleteVideoAlert")
+              .text("❌ Error deleting video.")
+              .removeClass("text-success")
+              .addClass("text-danger")
+              .show();
+          },
+        });
+      });
     });
 
     // Handle Change Password Form Submission
