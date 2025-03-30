@@ -39,6 +39,7 @@ $announcements = getAnnouncements();
     <link rel="stylesheet" href="css/adminDashboard.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="fetchTables.js"></script>
+    <script src="adminMobile.js"></script>
     <script>
         function updateUsersOnline() {
             $.ajax({
@@ -75,21 +76,28 @@ $announcements = getAnnouncements();
 
         <!-----HEADER------>
 
+
         <header class="header">
-            <div class="info-title">
+            <!-- Hamburger Button (for Mobile) -->
+            <button class="hamburger" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- System Title (Centered in Mobile View) -->
+            <div class="info-title-user">
                 Team Operations System: Admin
             </div>
+
+            <!-- Username & Logout Button (Aligned Right) -->
             <div class="btn-group">
                 <div class="info-title">
-                    Welcome, <?php echo $_SESSION['admin_team_username'] ?>
+                    Welcome, <?php echo $_SESSION['admin_team_username']; ?>
                 </div>
                 <button type="button" class="btn-dropdown dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item" href="adminLogout.php">Logout</a></li>
                 </ul>
             </div>
-
-
         </header>
 
         <!-----END OF HEADER------>
@@ -370,45 +378,42 @@ $announcements = getAnnouncements();
 
                 <div class="container-fluid link-container">
                     <div class="main-modal-buttons">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#addUsersModal">
+                                <img src="svg/add_user.svg" alt="">
+                                ADD USERS
+                            </button>
 
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#addUsersModal">
-                            <img src="svg/add_user.svg" alt="">
-                            ADD USERS
-                        </button>
+                            <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#uploadSessionModal">
+                                <img src="svg/video_upload.svg" alt="">
+                                UPLOAD SESSION
+                            </button>
 
-                        <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#uploadSessionModal">
-                            <img src="svg/video_upload.svg" alt="">
-                            UPLOAD SESSION
-                        </button>
+                            <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#announcementModal">
+                                <img src="svg/add_post.svg" alt="">
+                                ADD ANNOUNCEMENTS
+                            </button>
 
-                        <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#announcementModal">
-                            <img src="svg/add_post.svg" alt="">
-                            ADD ANNOUNCEMENTS
-                        </button>
-
-                        <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#assignTicketModal">
-                            <img src="svg/assign_tickets.svg" alt="">
-                            ASSIGN TICKETS
-                        </button>
-
-
-                        <?php
-                        /*ADD USERS MODAL */
-                        include "modals/add_users.php";
-
-                        /*UPLOAD SESSION MODAL */
-                        include "modals/upload_session.php";
-
-                        /*ADD ANNOUNCEMENT MODAL */
-                        include "modals/announcements_modal.php";
-
-                        /*ASSIGN TICKET MODAL */
-                        include "modals/assign_ticket.php";
-
-                        ?>
+                            <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#assignTicketModal">
+                                <img src="svg/assign_tickets.svg" alt="">
+                                ASSIGN TICKETS
+                            </button>
 
 
+                            <?php
+                            /*ADD USERS MODAL */
+                            include "modals/add_users.php";
+
+                            /*UPLOAD SESSION MODAL */
+                            include "modals/upload_session.php";
+
+                            /*ADD ANNOUNCEMENT MODAL */
+                            include "modals/announcements_modal.php";
+
+                            /*ASSIGN TICKET MODAL */
+                            include "modals/assign_ticket.php";
+
+                            ?>
                     </div>
                 </div>
             </div>

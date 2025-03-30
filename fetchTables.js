@@ -37,7 +37,7 @@ $(document).ready(function () {
       let hasMore = fullDesc.length > maxLength; // Check if "Read More" is needed
 
       let card = `
-        <div class="col-md-6 col-lg-4 mb-3">
+        <div class="col-lg-4 col-md-15 mb-3">
             <div class="card h-100 shadow-sm border d-flex flex-column">
                 <div class="card-body flex-grow-1 d-flex flex-column">
                     <div class="flex-grow-1">
