@@ -245,7 +245,6 @@
   text-align: center;
 }
 
-
 /*----END OF CALENDAR----*/
 
 /*----MAIN----*/
@@ -527,3 +526,40 @@
 }
 
 /*----END OF CRUD OPERATIONS BUTTONS----*/
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-top: 15px;
+}
+
+.updateTicketBtn {
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: #505050;
+  transition: background-color 100ms;
+}
+
+.deleteTicketBtn {
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: #be2121;
+  transition: background-color 100ms;
+}
+
+.deleteTicketBtn:hover{
+  background-color: #f52b2b;
+}
+
+.updateTicketBtn:hover {
+  background-color: #676666;
+}

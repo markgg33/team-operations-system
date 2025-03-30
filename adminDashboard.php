@@ -104,6 +104,9 @@ $announcements = getAnnouncements();
                 <li class="sidebar-list-item active" data-page="dashboard" onclick="changePage('dashboard')">
                     <i class="fa-solid fa-chart-line"></i>DASHBOARD
                 </li>
+                <li class="sidebar-list-item" data-page="master-tables" onclick="changePage('tickets')">
+                    <i class="fa-solid fa-table"></i> TICKET PAGE
+                </li>
                 <li class="sidebar-list-item" data-page="link-launchers" onclick="changePage('link-launchers')">
                     <i class="fa-solid fa-link"></i> LINK LAUNCHERS
                 </li>
@@ -238,6 +241,26 @@ $announcements = getAnnouncements();
             </div>
 
             <!-- End of Dashboard Page -->
+
+            <!---Tickets Page--->
+            <div id="tickets-page" class="page-content">
+                <div class="main-title">
+                    <h1>TICKETS</h1>
+                </div>
+
+                <div class="row">
+                    <div id="ticketsContainer"></div>
+                    <?php
+                    /*UPDATE MODAL */
+                    include "modals/update_ticket_modal.php";
+
+
+                    /*DELETE MODAL */
+                    include "modals/delete_ticket_modal.php";
+
+                    ?>
+                </div>
+            </div>
 
             <!---Link Launchers Page--->
 
@@ -416,22 +439,6 @@ $announcements = getAnnouncements();
                 <div class="container-fluid link-container">
                     <div class="container mt-4">
 
-                        <!--TICKET TABLE-->
-                        <h2 class="mb-3">TICKETS</h2>
-                        <table class="table table-bordered">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>Priority</th>
-                                    <th>Ticket #</th>
-                                    <th>Title</th>
-                                    <th>Assigned To</th>
-                                    <th>Status</th>
-                                    <th>Update/Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody id="ticketsTable"></tbody>
-                        </table>
-
                         <!--USERS TABLE-->
                         <h2 class="mt-5">USER LIST</h2>
                         <table class="table table-striped">
@@ -538,6 +545,24 @@ $announcements = getAnnouncements();
     <script src="sidebar.js"></script>
     <script src="generateLinks.js"> </script>
     <script src="validateUsers.js"></script>
+    <script>
+        // ✅ Properly Handle "Read More" Click Events
+        $(document).on("click", ".read-more-btn", function() {
+            let parent = $(this).closest(".ticket-description");
+            let shortText = parent.find(".short-text");
+            let fullText = parent.find(".full-text");
+
+            if (fullText.hasClass("d-none")) {
+                fullText.removeClass("d-none");
+                shortText.addClass("d-none");
+                $(this).text("Read Less");
+            } else {
+                fullText.addClass("d-none");
+                shortText.removeClass("d-none");
+                $(this).text("Read More");
+            }
+        });
+    </script>
 
 
 

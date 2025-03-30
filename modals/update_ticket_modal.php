@@ -12,11 +12,19 @@
 
                     <input type="hidden" id="updateTicketId" name="ticket_id">
 
+                    <!-- ✅ Title (Disabled) -->
                     <div class="mb-3">
                         <label for="updateTitle" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="updateTitle" name="ticket_title" required>
+                        <input type="text" class="form-control" id="updateTitle" name="ticket_title" disabled>
                     </div>
 
+                    <!-- ✅ Description (Editable) -->
+                    <div class="mb-3">
+                        <label for="updateDesc" class="form-label">Description</label>
+                        <textarea class="form-control" id="updateDesc" name="ticket_desc" rows="4" required></textarea>
+                    </div>
+
+                    <!-- ✅ Assigned User -->
                     <div class="mb-3">
                         <label for="updateAssignedTo" class="form-label">Assigned To</label>
                         <select class="form-control" id="updateAssignedTo" name="assigned_to" required>
@@ -31,18 +39,19 @@
                         </select>
                     </div>
 
+                    <!-- ✅ Status -->
                     <div class="mb-3">
                         <label for="updateStatus" class="form-label">Status</label>
                         <select class="form-select" id="updateStatus" name="ticket_status" required>
                             <option value="OPEN">Open</option>
-                            <option value="IN PROGRESS">In progress</option>
-                            <option value="ON HOLD">On hold</option>
-                            <option value="FOR REVIEW">For review</option>
+                            <option value="IN PROGRESS">In Progress</option>
+                            <option value="ON HOLD">On Hold</option>
+                            <option value="FOR REVIEW">For Review</option>
                             <option value="DONE">Done</option>
                         </select>
                     </div>
 
-                    <!-- ✅ New Priority Level Section -->
+                    <!-- ✅ Priority -->
                     <div class="mb-3">
                         <label for="updatePriority" class="form-label">Priority Level</label>
                         <select class="form-select" id="updatePriority" name="priority" required>

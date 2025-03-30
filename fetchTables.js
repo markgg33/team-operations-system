@@ -16,41 +16,124 @@ $(document).ready(function () {
 
   //<td>${ticket.ticket_desc}</td> ticket description
 
-  // Function to display ticket table
   function displayTickets(tickets) {
-    let table = $("#ticketsTable");
-    table.empty();
-    tickets.forEach((ticket) => {
-      let row = `<tr>
-      <td><span class="badge bg-${getPriorityColor(ticket.priority)}">
-                ${getPriorityLabel(ticket.priority)}
-            </span></td>
-           <td><strong>${ticket.ticket_number}</strong></td>
-            <td>${ticket.ticket_title}</td>
-            <td>${ticket.first_name} ${ticket.surname}</td>
-            <td><span class="badge bg-${getStatusColor(ticket.ticket_status)}">
-                ${ticket.ticket_status}
-            </span></td>
-          <td style="text-align: center;">
-              <button class="btn btn-edit btn-sm updateTicketBtn"
-                  style="background-color: #242424; color: white; border: none;"
-                  data-bs-toggle="modal" data-bs-target="#updateTicketModal"
-                  data-id="${ticket.ticket_id}"
-                  data-title="${ticket.ticket_title}"
-                  data-assigned="${ticket.assigned_to}"
-                  data-status="${ticket.ticket_status}">
-                  <i class="fa-solid fa-pen"></i> Edit
-              </button>
-              <button class="btn btn-danger btn-sm deleteTicketBtn"
-                  data-bs-toggle="modal" data-bs-target="#deleteTicketModal"
-                  data-id="${ticket.ticket_id}">
-                  <i class="fa-solid fa-trash"></i> Delete
-              </button>
-          </td>
-      </tr>`;
-      table.append(row);
+    let container = $("#ticketsContainer");
+    container.empty();
+
+    let row = $("<div class='row'></div>"); // Create a row for the grid layout
+
+    tickets.forEach((ticket, index) => {
+      let maxLength = 100; // Maximum character length before truncation
+      let fullDesc = ticket.ticket_desc
+        ? ticket.ticket_desc
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/\n/g, "<br>")
+        : "";
+      let shortDesc =
+        fullDesc.length > maxLength
+          ? fullDesc.substring(0, maxLength) + "..."
+          : fullDesc;
+      let hasMore = fullDesc.length > maxLength; // Check if "Read More" is needed
+
+      let card = `
+        <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card h-100 shadow-sm border d-flex flex-column">
+                <div class="card-body flex-grow-1 d-flex flex-column">
+                    <div class="flex-grow-1">
+                        <p class="card-text"><strong>Ticket No:</strong> ${
+                          ticket.ticket_number
+                        }</p>
+                        <h5 class="card-title text-uppercase fw-bold">${
+                          ticket.ticket_title
+                        }</h5>
+                        <br>
+                        <p class="card-text"><strong>Description:</strong></p>
+                        <p class="ticket-description d-flex flex-column text-white">
+                            <span class="short-text">${shortDesc}</span>
+                            <span class="full-text d-none">${fullDesc}</span>
+                            <br>
+                            <span class="read-more-container">
+                             ${
+                               hasMore
+                                 ? `<button class="read-more-btn btn btn-sm mt-2" style="border: none; padding: 10px; background-color:rgb(141, 141, 141); color: white;">Read More</button>`
+                                 : ""
+                             }
+                            </span>
+                        </p>
+                        
+
+                        <h5 class="card-title">
+                            <span class="badge bg-${getPriorityColor(
+                              ticket.priority
+                            )}">
+                                ${getPriorityLabel(ticket.priority)}
+                            </span>
+                        </h5>
+                        <span class="badge bg-${getStatusColor(
+                          ticket.ticket_status
+                        )}">
+                            ${ticket.ticket_status}
+                        </span>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <p class="card-text mt-2"><strong>Assigned To:</strong> ${
+                      ticket.first_name
+                    } ${ticket.surname}</p>
+                    <div class="buttons-container">
+                        <button class="updateTicketBtn"
+                            data-bs-toggle="modal" data-bs-target="#updateTicketModal"
+                            data-id="${ticket.ticket_id}"
+                            data-title="${ticket.ticket_title}"
+                            data-desc="${ticket.ticket_desc}" 
+                            data-assigned="${ticket.assigned_to}"
+                            data-status="${ticket.ticket_status}"
+                            data-priority="${ticket.priority}">
+                            <div class="btn-content">
+                                <i class="fa-solid fa-pen me-1"></i>
+                                <p>EDIT</p>
+                            </div>
+                        </button>
+                        <button class="deleteTicketBtn mt-3"
+                            data-bs-toggle="modal" data-bs-target="#deleteTicketModal"
+                            data-id="${ticket.ticket_id}">
+                            <div class="btn-content">
+                                <i class="fa-solid fa-trash me-1"></i>
+                                <p>DELETE</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+
+      row.append(card);
+
+      // Append row after every 3 items (for better alignment)
+      if ((index + 1) % 3 === 0 || index === tickets.length - 1) {
+        container.append(row);
+        row = $("<div class='row'></div>"); // Start a new row
+      }
     });
   }
+
+  // ✅ Properly Handle "Read More" Click Events
+  $(document).on("click", ".read-more-btn", function () {
+    let parent = $(this).closest(".ticket-description");
+    let shortText = parent.find(".short-text");
+    let fullText = parent.find(".full-text");
+
+    if (fullText.hasClass("d-none")) {
+      fullText.removeClass("d-none");
+      shortText.addClass("d-none");
+      $(this).text("Read Less");
+    } else {
+      fullText.addClass("d-none");
+      shortText.removeClass("d-none");
+      $(this).text("Read More");
+    }
+  });
 
   // ✅ Get Priority Color
   function getPriorityColor(priority) {
@@ -152,19 +235,32 @@ $(document).ready(function () {
   $(document).on("click", ".updateTicketBtn", function () {
     let ticketId = $(this).data("id");
     let ticketTitle = $(this).data("title");
+    let ticketDesc = $(this).data("desc");
     let assignedTo = $(this).data("assigned");
     let ticketStatus = $(this).data("status");
-    let ticketPriority = $(this).data("priority"); // Load priority
+    let ticketPriority = $(this).data("priority");
+
+    // ✅ Populate modal inputs
+    console.log("Ticket Data:", {
+      ticketId,
+      ticketTitle,
+      ticketDesc,
+      assignedTo,
+      ticketStatus,
+      ticketPriority,
+    });
 
     $("#updateTicketId").val(ticketId);
-    $("#updateTitle").val(ticketTitle);
+    $("#updateTitle").val(ticketTitle).prop("disabled", true);
+    $("#updateDesc").val(ticketDesc);
     $("#updateAssignedTo").val(assignedTo);
     $("#updateStatus").val(ticketStatus);
-    $("#updatePriority").val(ticketPriority); // Set priority in modal
-    $("#updateAlert").hide(); // Hide alert when opening
+    $("#updatePriority").val(ticketPriority);
+
+    $("#updateAlert").hide();
   });
 
-  // ✅ Handle Update Ticket Form Submission (Alert inside Modal)
+  // ✅ Handle Update Ticket Form Submission
   $("#updateTicketForm").submit(function (event) {
     event.preventDefault();
 
@@ -174,14 +270,14 @@ $(document).ready(function () {
       data: $(this).serialize(),
       dataType: "json",
       success: function (response) {
-        $("#updateAlert").text(response.message).show(); // Show alert inside modal
+        $("#updateAlert").text(response.message).show();
         setTimeout(() => {
-          $("#updateTicketModal").modal("hide"); // CLOSE MODAL FOR 1 SEC
+          $("#updateTicketModal").modal("hide");
           location.reload();
         }, 1000);
       },
       error: function () {
-        $("#updateAlert").text("❌ Error updating ticket.").show(); // SHOW ERROR MODAL
+        $("#updateAlert").text("❌ Error updating ticket.").show();
       },
     });
   });
@@ -258,14 +354,16 @@ $(document).ready(function () {
     // ✅ Open the Update Ticket Status Modal & Load Data
     $(document).on("click", ".editUserTicketBtn", function () {
       let ticketId = $(this).data("id");
+      let ticketDesc = $(this).attr("data-desc"); // Use attr() instead of data()
       let ticketStatus = $(this).data("status");
 
       $("#userTicketId").val(ticketId);
+      $("#userTicketDesc").val(ticketDesc); // Populate textarea
       $("#userTicketStatus").val(ticketStatus);
-      $("#updateAlert").hide(); // Hide alert when opening the modal
+      $("#updateAlert").hide();
     });
 
-    // ✅ Handle Form Submission (Show Alert in Modal)
+    // ✅ Handle Form Submission (Show Alert in Modal).
     $("#updateUserTicketForm").submit(function (event) {
       event.preventDefault(); // Prevent default form submission
 
@@ -373,29 +471,29 @@ $(document).ready(function () {
           data: { session_id: videoId },
           dataType: "json",
           success: function (response) {
+            $("#deleteVideoAlert")
+              .removeClass("text-danger text-success")
+              .show();
+
             if (response.success) {
               $("#deleteVideoAlert")
                 .text(response.message)
-                .removeClass("text-danger")
-                .addClass("text-success")
-                .show();
+                .addClass("text-success");
 
               // Delay closing the modal and refreshing the page
               setTimeout(() => {
-                $("#deleteVideoModal").modal("hide"); // Close modal
-                location.reload(); // Refresh to update UI
+                $("#deleteVideoModal").modal("hide");
+                location.reload();
               }, 1500);
             } else {
               $("#deleteVideoAlert")
-                .text("❌ Error deleting video.")
-                .removeClass("text-success")
-                .addClass("text-danger")
-                .show();
+                .text(response.message)
+                .addClass("text-danger");
             }
           },
           error: function () {
             $("#deleteVideoAlert")
-              .text("❌ Error deleting video.")
+              .text("❌ Error deleting video. Please try again.")
               .removeClass("text-success")
               .addClass("text-danger")
               .show();

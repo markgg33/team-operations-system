@@ -4,6 +4,12 @@ include "functions.php";
 
 session_start();
 
+/*echo "<pre>";
+print_r($_SESSION);
+echo "</pre>";*/
+
+
+
 if (isset($_SESSION["user_team_username"])) {
     $team_username = $_SESSION['user_team_username'];
 
@@ -230,9 +236,32 @@ $result = mysqli_query($conn, $query);
                                         </h5>
                                         <hr>
 
+                                        <?php
+                                        $max_length = 100; // Limit before truncation
+                                        $desc = htmlspecialchars($ticket['ticket_desc']); // Ensure safety
+                                        $short_desc = (strlen($desc) > $max_length) ? substr($desc, 0, $max_length) . '...' : $desc;
+                                        ?>
+
                                         <div class="letter-format flex-grow-1">
-                                            <p><?php echo nl2br(htmlspecialchars($ticket['ticket_desc'])); ?></p>
+                                            <p class="ticket-description d-flex flex-column">
+                                                <span class="short-text"><?php echo nl2br($short_desc); ?></span>
+                                                <span class="full-text d-none"><?php echo nl2br($desc); ?></span>
+                                                <br>
+                                                <span class="read-more-container">
+                                                    <?php if (strlen($desc) > $max_length): ?>
+                                                        <button class="read-more-btn btn btn-sm mt-2" style="border: none; padding: 10px; background-color: #242424; color: white; text-decoration: none;" data-id="<?php echo $ticket['ticket_id']; ?>">
+                                                            Read More
+                                                        </button>
+                                                    <?php endif; ?>
+                                                </span>
+                                            </p>
                                         </div>
+
+
+
+                                        <!---div class="letter-format flex-grow-1">
+                                            <p><!?php echo nl2br(htmlspecialchars($ticket['ticket_desc'])); ?></p>
+                                        </div--->
 
                                         <hr>
                                         <div class="d-flex justify-content-between align-items-center">
@@ -284,13 +313,15 @@ $result = mysqli_query($conn, $query);
 
                                     <!-- ✅ Edit Button (User Can Update Status) -->
                                     <div class="card-footer text-center">
-                                        <button class="btn-sm editUserTicketBtn w-100"
+                                        <button class="editUserTicketBtn w-100"
                                             data-bs-toggle="modal"
                                             data-bs-target="#editUserTicketModal"
-                                            data-id="<?php echo $ticket['ticket_id']; ?>"
+                                            data-id="<?php echo htmlspecialchars($ticket['ticket_id']); ?>"
+                                            data-desc="<?php echo htmlspecialchars($ticket['ticket_desc']); ?>"
                                             data-status="<?php echo htmlspecialchars($ticket['ticket_status']); ?>">
-                                            <i class="fa-solid fa-pen"></i> Edit Status
+                                            <i class="fa-solid fa-pen"></i> Edit Ticket
                                         </button>
+
                                     </div>
                                 </div>
                             </div>
@@ -408,6 +439,22 @@ $result = mysqli_query($conn, $query);
                     console.error("Error checking password status.");
                 }
             });
+        });
+
+        $(document).on("click", ".read-more-btn", function() {
+            let parent = $(this).closest(".ticket-description");
+            let shortText = parent.find(".short-text");
+            let fullText = parent.find(".full-text");
+
+            if (fullText.hasClass("d-none")) {
+                fullText.removeClass("d-none");
+                shortText.addClass("d-none");
+                $(this).text("Read Less");
+            } else {
+                fullText.addClass("d-none");
+                shortText.removeClass("d-none");
+                $(this).text("Read More");
+            }
         });
     </script>
 

@@ -1,4 +1,27 @@
 <?php
+
+//V2
+
+/*session_start();
+include "config.php";
+
+if (isset($_SESSION["user_" . $_SESSION['team_id']])) {
+    $team_id = $_SESSION['team_id'];
+
+    // Reset `is_logged_in`
+    $updateLogoutStatus = "UPDATE team_users SET is_logged_in = 0 WHERE team_id = '$team_id'";
+    mysqli_query($conn, $updateLogoutStatus);
+
+    // ✅ Remove only this user’s session
+    unset($_SESSION["user_" . $team_id]);
+}
+
+// Redirect to login page
+header("Location: index.php");
+exit();*/
+
+
+//V1 WORKING
 session_start();
 include "config.php";
 

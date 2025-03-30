@@ -36,14 +36,14 @@ function calculateHolyWeek(year) {
   const month = Math.floor((h + l - 7 * m + 114) / 31); // March or April
   const day = ((h + l - 7 * m + 114) % 31) + 1; // Easter Sunday
 
-  // ✅ Get Easter Sunday Date (Corrected)
+  // ✅ Get Easter Sunday Date
   const easterSunday = new Date(year, month - 1, day);
 
-  // ✅ Correct subtraction for Maundy Thursday (-3 days)
+  // ✅ Maundy Thursday (-3 days from Easter Sunday)
   const maundyThursday = new Date(easterSunday);
   maundyThursday.setDate(easterSunday.getDate() - 2);
 
-  // ✅ Correct subtraction for Good Friday (-2 days)
+  // ✅ Good Friday (-2 days from Easter Sunday)
   const goodFriday = new Date(easterSunday);
   goodFriday.setDate(easterSunday.getDate() - 1);
 

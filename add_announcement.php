@@ -20,3 +20,5 @@ if (isset($_POST['submit_announce'])) {
 
     mysqli_close($conn);
 }
+
+// Sample comment
