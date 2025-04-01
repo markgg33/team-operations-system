@@ -47,6 +47,7 @@ $result = mysqli_query($conn, $query);
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/userDashboard.css" />
     <script src="fetchTables.js"></script>
+    <script src="adminMobile.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -63,6 +64,7 @@ $result = mysqli_query($conn, $query);
                             <div class="announcement">
                                 <hr>
                                 <h2><strong>${announcement.announce_title}</strong></h2>
+                                <br>
                                 <p>${announcement.announce_desc.replace(/\n/g, "<br>")}</p>
                                 <small class="text-muted">
                                     Posted on: ${new Date(announcement.date_posted).toLocaleString()}
@@ -101,7 +103,12 @@ $result = mysqli_query($conn, $query);
         <!-----HEADER------>
 
         <header class="header">
-            <div class="info-title">
+            <!-- Hamburger Button (for Mobile) -->
+            <button class="hamburger" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="info-title-user">
                 Team Operations System: User
             </div>
             <div class="btn-group">
@@ -225,7 +232,7 @@ $result = mysqli_query($conn, $query);
                 <div class="row">
                     <?php if (!empty($tickets)): ?>
                         <?php foreach ($tickets as $ticket): ?>
-                            <div class="col-md-4 mb-4">
+                            <div class="col-lg-4 col-md-15 mb-4">
                                 <div class="card h-100 shadow d-flex flex-column justify-content-between">
                                     <div class="card-body d-flex flex-column">
                                         <h6 class="text-muted">Ticket Number:

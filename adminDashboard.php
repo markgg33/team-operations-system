@@ -378,42 +378,42 @@ $announcements = getAnnouncements();
 
                 <div class="container-fluid link-container">
                     <div class="main-modal-buttons">
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#addUsersModal">
-                                <img src="svg/add_user.svg" alt="">
-                                ADD USERS
-                            </button>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#addUsersModal">
+                            <img src="svg/add_user.svg" alt="">
+                            ADD USERS
+                        </button>
 
-                            <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#uploadSessionModal">
-                                <img src="svg/video_upload.svg" alt="">
-                                UPLOAD SESSION
-                            </button>
+                        <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#uploadSessionModal">
+                            <img src="svg/video_upload.svg" alt="">
+                            UPLOAD SESSION
+                        </button>
 
-                            <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#announcementModal">
-                                <img src="svg/add_post.svg" alt="">
-                                ADD ANNOUNCEMENTS
-                            </button>
+                        <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#announcementModal">
+                            <img src="svg/add_post.svg" alt="">
+                            ADD ANNOUNCEMENTS
+                        </button>
 
-                            <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#assignTicketModal">
-                                <img src="svg/assign_tickets.svg" alt="">
-                                ASSIGN TICKETS
-                            </button>
+                        <button type="button" class="btn-crud" data-bs-toggle="modal" data-bs-target="#assignTicketModal">
+                            <img src="svg/assign_tickets.svg" alt="">
+                            ASSIGN TICKETS
+                        </button>
 
 
-                            <?php
-                            /*ADD USERS MODAL */
-                            include "modals/add_users.php";
+                        <?php
+                        /*ADD USERS MODAL */
+                        include "modals/add_users.php";
 
-                            /*UPLOAD SESSION MODAL */
-                            include "modals/upload_session.php";
+                        /*UPLOAD SESSION MODAL */
+                        include "modals/upload_session.php";
 
-                            /*ADD ANNOUNCEMENT MODAL */
-                            include "modals/announcements_modal.php";
+                        /*ADD ANNOUNCEMENT MODAL */
+                        include "modals/announcements_modal.php";
 
-                            /*ASSIGN TICKET MODAL */
-                            include "modals/assign_ticket.php";
+                        /*ASSIGN TICKET MODAL */
+                        include "modals/assign_ticket.php";
 
-                            ?>
+                        ?>
                     </div>
                 </div>
             </div>
@@ -446,96 +446,102 @@ $announcements = getAnnouncements();
 
                         <!--USERS TABLE-->
                         <h2 class="mt-5">USER LIST</h2>
-                        <table class="table table-striped">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>Full Name</th>
-                                    <th>Username</th>
-                                    <th>Email</th>
-                                    <th>Gender</th>
-                                    <th>Date of Birth</th>
-                                    <th>User Type</th>
-                                </tr>
-                            </thead>
-                            <tbody id="usersTable"></tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Full Name</th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Gender</th>
+                                        <th>Date of Birth</th>
+                                        <th>User Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="usersTable"></tbody>
+                            </table>
+                        </div>
 
                         <!--UPLOADED SESSIONS TABLE-->
                         <h2 class="mt-5">UPLOADED VIDEO SESSIONS</h2>
-                        <table class="table table-hover">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Actions</th> <!-- New Column for Edit/Delete -->
-                                </tr>
-                            </thead>
-                            <tbody id="sessionsTable">
-                                <?php
-                                $query = "SELECT * FROM upload_session ORDER BY session_id DESC";
-                                $result = mysqli_query($conn, $query);
-                                while ($row = mysqli_fetch_assoc($result)) { ?>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-dark">
                                     <tr>
-                                        <td><?php echo $row['session_id']; ?></td>
-                                        <td><?php echo htmlspecialchars($row['session_title']); ?></td>
-                                        <td><?php echo htmlspecialchars($row['session_desc']); ?></td>
-                                        <td>
-                                            <!-- Edit Button -->
-                                            <button class="btn btn-sm btn-primary editVideoBtn"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#editVideoModal"
-                                                data-id="<?php echo $row['session_id']; ?>"
-                                                data-title="<?php echo htmlspecialchars($row['session_title']); ?>"
-                                                data-desc="<?php echo htmlspecialchars($row['session_desc']); ?>">
-                                                <i class="fa-solid fa-pen"></i> Edit
-                                            </button>
-
-                                            <!-- Delete Button -->
-                                            <button class="btn btn-sm btn-danger deleteVideoBtn"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#deleteVideoModal"
-                                                data-id="<?php echo $row['session_id']; ?>">
-                                                <i class="fa-solid fa-trash"></i> Delete
-                                            </button>
-                                        </td>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <th>Actions</th> <!-- New Column for Edit/Delete -->
                                     </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody id="sessionsTable">
+                                    <?php
+                                    $query = "SELECT * FROM upload_session ORDER BY session_id DESC";
+                                    $result = mysqli_query($conn, $query);
+                                    while ($row = mysqli_fetch_assoc($result)) { ?>
+                                        <tr>
+                                            <td><?php echo $row['session_id']; ?></td>
+                                            <td><?php echo htmlspecialchars($row['session_title']); ?></td>
+                                            <td><?php echo htmlspecialchars($row['session_desc']); ?></td>
+                                            <td>
+                                                <!-- Edit Button -->
+                                                <button class="btn btn-sm btn-primary editVideoBtn"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#editVideoModal"
+                                                    data-id="<?php echo $row['session_id']; ?>"
+                                                    data-title="<?php echo htmlspecialchars($row['session_title']); ?>"
+                                                    data-desc="<?php echo htmlspecialchars($row['session_desc']); ?>">
+                                                    <i class="fa-solid fa-pen"></i> Edit
+                                                </button>
+
+                                                <!-- Delete Button -->
+                                                <button class="btn btn-sm btn-danger deleteVideoBtn"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#deleteVideoModal"
+                                                    data-id="<?php echo $row['session_id']; ?>">
+                                                    <i class="fa-solid fa-trash"></i> Delete
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
 
                         <!--ANNOUNCEMENTS TABLE -->
                         <h2 class="mt-5">ANNOUNCEMENTS</h2>
-                        <table class="table table-bordered">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Date Posted</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="announcementsTable">
-                                <?php
-                                $query = "SELECT * FROM announcements ORDER BY date_posted DESC";
-                                $result = mysqli_query($conn, $query);
-                                while ($row = mysqli_fetch_assoc($result)) { ?>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-dark">
                                     <tr>
-                                        <td><?php echo htmlspecialchars($row['announce_title']); ?></td>
-                                        <td><?php echo htmlspecialchars($row['announce_desc']); ?></td>
-                                        <td><?php echo $row['date_posted']; ?></td>
-                                        <td>
-                                            <!-- Delete Button -->
-                                            <button class="btn btn-danger btn-sm deleteAnnouncementBtn"
-                                                data-id="<?php echo $row['announce_id']; ?>"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#deleteAnnouncementModal">
-                                                <i class="fa-solid fa-trash"></i> Delete
-                                            </button>
-                                        </td>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <th>Date Posted</th>
+                                        <th>Action</th>
                                     </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody id="announcementsTable">
+                                    <?php
+                                    $query = "SELECT * FROM announcements ORDER BY date_posted DESC";
+                                    $result = mysqli_query($conn, $query);
+                                    while ($row = mysqli_fetch_assoc($result)) { ?>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($row['announce_title']); ?></td>
+                                            <td><?php echo htmlspecialchars($row['announce_desc']); ?></td>
+                                            <td><?php echo $row['date_posted']; ?></td>
+                                            <td>
+                                                <!-- Delete Button -->
+                                                <button class="btn btn-danger btn-sm deleteAnnouncementBtn"
+                                                    data-id="<?php echo $row['announce_id']; ?>"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#deleteAnnouncementModal">
+                                                    <i class="fa-solid fa-trash"></i> Delete
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 

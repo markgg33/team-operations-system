@@ -47,7 +47,7 @@
     font-size: 24px;
     color: white;
     cursor: pointer;
-    z-index: 1100;
+    z-index: 1050;
   }
 
   .sidebar-open #team-sidebar {
@@ -66,26 +66,6 @@
 
   .info-title-user {
     display: none;
-  }
-}
-
-/* Responsive Cards */
-@media screen and (max-width: 1024px) {
-  .main-cards {
-    grid-template-columns: repeat(2, 1fr); /* 2 Columns for Tablets */
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .main-cards {
-    grid-template-columns: 1fr; /* Stack cards vertically */
-  }
-}
-
-/* Responsive Fixes */
-@media screen and (max-width: 1024px) {
-  .main-modal-buttons {
-    grid-template-columns: repeat(2, 1fr) /* Ensure buttons remain centered */
   }
 }
 
@@ -147,6 +127,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  z-index: 1000;
 }
 
 /*----END OF HEADER----*/
@@ -333,6 +314,63 @@
   text-align: center;
 }
 
+/* ✅ Mobile-Friendly Adjustments */
+@media screen and (max-width: 768px) {
+  .calendar-header {
+    padding: 15px;
+  }
+
+  .calendar-header h3 {
+    font-size: 1rem;
+  }
+
+  .prev-month,
+  .next-month {
+    font-size: 1.2rem;
+  }
+
+  .calendar-weekdays {
+    grid-template-columns: repeat(7, 1fr);
+    font-size: 12px;
+  }
+
+  .calendar-days {
+    grid-template-columns: repeat(3, 1fr); /* Show only 3 days per row */
+    gap: 6px;
+    min-height: auto;
+  }
+
+  .calendar-days .day {
+    font-size: 12px;
+    min-height: 50px;
+    padding: 5px;
+  }
+
+  .calendar-days .event-text {
+    font-size: 10px;
+  }
+}
+
+/* ✅ Ultra Small Devices (Phones < 480px) */
+@media screen and (max-width: 480px) {
+  .calendar-days {
+    grid-template-columns: repeat(2, 1fr); /* Show only 2 days per row */
+  }
+
+  .calendar-header h3 {
+    font-size: 0.9rem;
+  }
+
+  .calendar-days .day {
+    font-size: 11px;
+    min-height: 45px;
+  }
+
+  .calendar-days .event-text {
+    font-size: 9px;
+  }
+}
+
 /*----END OF CALENDAR----*/
 
 /*----MAIN----*/
@@ -356,8 +394,21 @@
     3,
     1fr
   ); /*ADJUST ACCORDING TO THE NUMBER OF CARDS*/
-  gap: 20px;
+  gap: 10px;
   margin: 20px 0;
+}
+
+/* Responsive Cards */
+@media screen and (max-width: 1024px) {
+  .main-cards {
+    grid-template-columns: repeat(2, 1fr); /* 2 Columns for Tablets */
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .main-cards {
+    grid-template-columns: 1fr; /* Stack cards vertically */
+  }
 }
 
 .card {
@@ -404,7 +455,7 @@
 
 .charts {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 2fr 1fr;
   gap: 20px;
 }
 
@@ -427,9 +478,24 @@
   font-weight: 600;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 850px) {
   .charts {
     grid-template-columns: 1fr;
+  }
+  .chart-card {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .charts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .charts-card {
+    width: 100%; /* Ensures it takes full width */
+    max-width: 100%;
   }
 }
 
@@ -484,13 +550,13 @@
 }
 
 /* Responsive Cards */
-@media screen and (max-width: 1300px) {
+@media screen and (max-width: 1200px) {
   .main-buttons {
     grid-template-columns: repeat(2, 1fr); /* 2 Columns for Tablets */
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 850px) {
   .main-buttons {
     grid-template-columns: 1fr; /* Stack cards vertically */
   }
@@ -610,12 +676,41 @@
 .main-modal-buttons {
   display: grid;
   grid-template-columns: repeat(
-    4,
+    3,
     1fr
   ); /*ADJUST ACCORDING TO THE NUMBER OF CARDS*/
   gap: 15px;
   margin: 20px 0;
 }
+
+/*==================== Responsive Fixes FOR MAIN MODAL*========================*/
+@media screen and (max-width: 1200px) {
+  .main-modal-buttons {
+    /*grid-template-columns: repeat(2, 1fr); /* 2 Columns for Tablets */
+    grid-template-columns: 1fr; /* Ensure buttons remain centered */
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .main-modal-buttons {
+    grid-template-columns: 1fr; /* Ensure buttons remain centered */
+  }
+ 
+}
+
+@media screen and (max-width: 440px) {
+  .main-modal-buttons {
+    grid-template-columns: 1fr; /* Ensure buttons remain centered */
+  }
+
+  .btn-crud{
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+  }
+}
+
+/*============================================*/
 
 /*MODALs*/
 
@@ -627,6 +722,10 @@
 .modal-content {
   background-color: #242424;
   color: white;
+}
+
+.modal-header{
+    z-index: 1200;
 }
 
 .gsd-box {
@@ -682,4 +781,22 @@
 
 .updateTicketBtn:hover {
   background-color: #676666;
+}
+
+@media screen and (max-width: 768px) {
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Reduce table font size for better readability */
+  table {
+    font-size: 14px;
+  }
+
+  /* Make buttons fit within table cells */
+  .btn {
+    padding: 5px 8px;
+    font-size: 12px;
+  }
 }

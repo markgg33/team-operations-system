@@ -15,10 +15,78 @@
   height: 100vh;
 }
 
+/*RESPONSIVE FUNCTIONS*/
+
+/* Mobile Responsive Sidebar */
+@media screen and (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr; /* Remove fixed sidebar */
+    grid-template-areas:
+      "header"
+      "main";
+  }
+
+  #team-sidebar {
+    position: fixed;
+    left: -250px; /* Initially hidden */
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #242424;
+    transition: left 0.3s ease-in-out;
+    z-index: 1000;
+  }
+
+  .hamburger {
+    display: block !important; /* Show the button on mobile */
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    z-index: 1100;
+  }
+
+  .sidebar-open #team-sidebar {
+    left: 0; /* Slide in when opened */
+  }
+
+  .btn-group {
+    position: absolute !important;
+    right: 20px; /* Align username & logout to the right */
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap; /* Prevents text from wrapping */
+    display: flex; /* Ensures the username & logout button stay in line */
+    align-items: center;
+  }
+
+  .info-title-user {
+    display: none;
+  }
+}
+
+/* Responsive Cards */
+@media screen and (max-width: 1024px) {
+  .main-cards {
+    grid-template-columns: repeat(2, 1fr); /* 2 Columns for Tablets */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main-cards {
+    grid-template-columns: 1fr; /* Stack cards vertically */
+  }
+}
+
 /*----HEADER----*/
 
 .header {
   grid-area: header;
+  position: relative;
   height: 70px;
   background-color: #242424;
   display: flex;
@@ -27,6 +95,10 @@
   padding: 0 30px;
   box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.4);
   color: white;
+}
+
+.hamburger {
+  display: none;
 }
 
 .info-title {
@@ -111,9 +183,25 @@
 
 .main-buttons {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr; /*ADJUST ACCORDING TO THE NUMBER OF CARDS*/
+  grid-template-columns: repeat(
+    3,
+    1fr
+  ); /*ADJUST ACCORDING TO THE NUMBER OF CARDS*/
   gap: 50px;
   margin: 20px 0;
+}
+
+/* Responsive Cards */
+@media screen and (max-width: 1300px) {
+  .main-buttons {
+    grid-template-columns: repeat(2, 1fr); /* 2 Columns for Tablets */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main-buttons {
+    grid-template-columns: 1fr; /* Stack cards vertically */
+  }
 }
 
 /*----END OF LINK LAUNCHERS----*/
@@ -121,12 +209,12 @@
 /*----SIDEBAR----*/
 
 #team-sidebar {
-  grid-area: sidebar;
-  height: 100%;
+  width: 250px;
   background-color: #242424;
   overflow-y: auto;
   color: white;
   padding-top: 50px;
+  transition: transform 0.3s ease-in-out;
 }
 
 .sidebar-list {
@@ -242,7 +330,8 @@ video {
   width: 100%;
 }
 
-.editTicketBtn, .editUserTicketBtn {
+.editTicketBtn,
+.editUserTicketBtn {
   border: none;
   border-radius: 5px;
   padding: 10px;
@@ -251,7 +340,8 @@ video {
   transition: background-color 100ms;
 }
 
-.editTicketBtn:hover, .editUserTicketBtn:hover {
+.editTicketBtn:hover,
+.editUserTicketBtn:hover {
   background-color: #676666;
 }
 

@@ -98,9 +98,17 @@ include "config.php";
 
                         <!-- Modal Footer -->
                         <div class="modal-footer">
+                            <span id="email-indicator" style="display:none; color: blue;">📧 Sending email notification...</span>
                             <button type="button" class="btn-temp-close" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn-temp" name="assign">CREATE TICKET</button>
+                            <button type="submit" class="btn-temp" name="assign" onclick="showEmailIndicator()">CREATE TICKET</button>
                         </div>
+
+                        <script>
+                            function showEmailIndicator() {
+                                document.getElementById('email-indicator').style.display = 'inline';
+                            }
+                        </script>
+
 
                     </form>
                 </div>
